@@ -18,9 +18,9 @@
     "style"
   ],
   "dependencies": {
-    "@jsonforms/core": "2.4.0-alpha.2",
-    "@jsonforms/react": "2.4.0-alpha.2",
-    "@jsonforms/vanilla-renderers":"2.4.0-alpha.2",
+    "@jsonforms/core": "2.4.0-beta.0",
+    "@jsonforms/react": "2.4.0-beta.0",
+    "@jsonforms/vanilla-renderers":"2.4.0-beta.0",
     "@theia/core": "^1.0.0",
     "@theia/workspace": "^1.0.0",
     "react": "^16.9.13",
