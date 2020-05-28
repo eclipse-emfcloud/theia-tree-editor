@@ -1,0 +1,49 @@
+{
+  "name": "theia-tree-editor",
+  "version": "0.6.0",
+  "license": "(EPL-2.0 OR MIT)",
+  "author": {
+    "name": "EclipseSource"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eclipsesource/theia-tree-editor.git"
+  },
+  "bugs": "https://github.com/eclipsesource/theia-tree-editor/issues",
+  "main": "lib/browser/index.js",
+  "typings": "lib/browser/index.d.ts",
+  "files": [
+    "lib",
+    "src",
+    "style"
+  ],
+  "dependencies": {
+    "@jsonforms/core": "2.4.0-alpha.2",
+    "@jsonforms/react": "2.4.0-alpha.2",
+    "@jsonforms/vanilla-renderers":"2.4.0-alpha.2",
+    "@theia/core": "1.0.0",
+    "@theia/filesystem": "1.0.0",
+    "@theia/workspace": "1.0.0",
+    "react": "^16.9.13",
+    "react-dom": "^16.9.13",
+    "react-redux": "^7.1.5",
+    "recompose": "^0.27.1",
+    "redux": "^4.0.4",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "rimraf": "latest",
+    "semver": "^6.3.0",
+    "typescript": "latest",
+    "tslint": "^5.5.0"
+  },
+  "scripts": {
+    "prepare": "yarn run clean && yarn run build",
+    "clean": "rimraf lib",
+    "lint": "tslint -c ./tslint.json --project ./tsconfig.json",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "publish:latest": "yarn publish --tag latest",
+    "publish:next": "yarn publish --new-version \"$(semver $npm_package_version -i minor)-next.$(git rev-parse --short HEAD)\" --tag next"
+  }
+}
