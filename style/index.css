@@ -30,6 +30,7 @@ button[type="button"] {
 
 .theia-tree-editor-tree {
   min-width: 250px;
+  max-width: 500px;
 }
 
 .theia-tree-editor-tree .tree-icon-container {
@@ -55,7 +56,7 @@ button[type="button"] {
 .theia-tree-editor .control {
   display: flex;
   flex-direction: column;
-  margin: 2em;
+  margin: 1em;
 }
 
 .theia-tree-editor .control > label {
@@ -71,8 +72,4 @@ button[type="button"] {
 
 .theia-tree-editor .control > .input-description {
   color: var(--theia-content-font-color0);
-}
-
-.theia-tree-editor .control > .validation_error {
-  color: var(--theia-error-color0);
 }

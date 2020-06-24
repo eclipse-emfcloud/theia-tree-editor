@@ -21,6 +21,8 @@ import { combineReducers, createStore } from 'redux';
 
 import { TreeEditor } from './interfaces';
 
+const JSON_FORMS_CONTAINER_CSS_CLASS = 'jsonforms-container';
+
 /**
  * Renders the detail view of the tree editor and binds the selected object's data to a generated form.
  */
@@ -111,13 +113,13 @@ export class DetailFormWidget extends BaseWidget {
   protected renderForms(): void {
     if (this.selectedNode) {
       ReactDOM.render(
-        <React.Fragment>
+        <div className={JSON_FORMS_CONTAINER_CSS_CLASS}>
           <Provider store={this.store}>
             <JsonFormsReduxContext>
               <JsonFormsDispatch />
             </JsonFormsReduxContext>
           </Provider>
-        </React.Fragment>,
+        </div>,
         this.node
       );
     } else {
