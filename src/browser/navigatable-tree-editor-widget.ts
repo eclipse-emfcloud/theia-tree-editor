@@ -14,8 +14,8 @@ import URI from '@theia/core/lib/common/uri';
 import { WorkspaceService } from '@theia/workspace/lib/browser';
 
 import { DetailFormWidget } from './detail-form-widget';
-import { BaseTreeEditorWidget } from './tree-editor-widget';
 import { MasterTreeWidget } from './master-tree-widget';
+import { BaseTreeEditorWidget } from './tree-editor-widget';
 
 export const NavigatableTreeEditorOptions = Symbol(
     'NavigatableTreeEditorOptions'
@@ -32,7 +32,7 @@ export abstract class NavigatableTreeEditorWidget extends BaseTreeEditorWidget i
         protected readonly workspaceService: WorkspaceService,
         protected readonly logger: ILogger,
         readonly widget_id: string,
-        protected readonly options: NavigatableTreeEditorOptions,
+        protected readonly options: NavigatableTreeEditorOptions
     ) {
         super(
             treeWidget,

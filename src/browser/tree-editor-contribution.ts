@@ -14,13 +14,13 @@ import {
     CommandHandler,
     CommandRegistry,
     MenuContribution,
-    MenuModelRegistry,
+    MenuModelRegistry
 } from '@theia/core';
-import { WidgetOpenHandler, LabelProviderContribution } from '@theia/core/lib/browser';
+import { LabelProviderContribution, WidgetOpenHandler } from '@theia/core/lib/browser';
 
 import { TreeEditor } from './interfaces';
-import { BaseTreeEditorWidget } from './tree-editor-widget';
 import { TreeAnchor, TreeContextMenu } from './master-tree-widget';
+import { BaseTreeEditorWidget } from './tree-editor-widget';
 import { generateAddCommands } from './util';
 
 /**
@@ -79,7 +79,7 @@ class AddCommandHandler implements CommandHandler {
         private modelService: TreeEditor.ModelService) {
     }
 
-    execute(treeAnchor: TreeAnchor) {
+    execute(treeAnchor: TreeAnchor): void {
         treeAnchor.onClick(this.property, this.type);
     }
 

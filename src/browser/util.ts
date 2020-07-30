@@ -9,20 +9,25 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import { Command } from '@theia/core';
-import { createTreeContainer, defaultTreeProps, TreeProps, TreeWidget as TheiaTreeWidget} from '@theia/core/lib/browser/tree';
+import {
+    createTreeContainer,
+    defaultTreeProps,
+    TreeProps,
+    TreeWidget as TheiaTreeWidget
+} from '@theia/core/lib/browser/tree';
 import { interfaces } from 'inversify';
 
-import { TreeEditor } from './interfaces';
 import { DetailFormWidget } from './detail-form-widget';
+import { TreeEditor } from './interfaces';
+import { MasterTreeWidget, TreeContextMenu } from './master-tree-widget';
 import { BaseTreeEditorWidget } from './tree-editor-widget';
-import { TreeContextMenu, MasterTreeWidget } from './master-tree-widget';
 
-export const TREE_PROPS = <TreeProps>{
+export const TREE_PROPS = {
     ...defaultTreeProps,
     contextMenuPath: TreeContextMenu.CONTEXT_MENU,
     multiSelect: false,
     search: false
-};
+} as TreeProps;
 
 function createTreeWidget(
     parent: interfaces.Container

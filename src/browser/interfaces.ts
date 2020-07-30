@@ -11,14 +11,14 @@
 import { JsonSchema, UISchemaElement } from '@jsonforms/core';
 import {
     CompositeTreeNode,
+    DecoratedTreeNode,
     ExpandableTreeNode,
     SelectableTreeNode,
-    DecoratedTreeNode,
-    TreeNode,
+    TreeNode
 } from '@theia/core/lib/browser/tree';
 
 export namespace TreeEditor {
-    export interface RootNode extends CompositeTreeNode { }
+    export type RootNode = CompositeTreeNode;
 
     export namespace RootNode {
         export function is(node: TreeNode | undefined): node is RootNode {
