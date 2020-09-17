@@ -7,9 +7,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/eclipsesource/theia-tree-editor.git"
+    "url": "https://github.com/eclipse-emfcloud/theia-tree-editor.git"
   },
-  "bugs": "https://github.com/eclipsesource/theia-tree-editor/issues",
+  "bugs": "https://github.com/eclipse-emfcloud/theia-tree-editor/issues",
   "main": "lib/browser/index.js",
   "typings": "lib/browser/index.d.ts",
   "files": [
@@ -49,5 +49,8 @@
     "watch": "tsc -w",
     "publish:latest": "yarn publish --tag latest",
     "publish:next": "yarn publish --new-version \"$(semver $npm_package_version -i minor)-next.$(git rev-parse --short HEAD)\" --tag next"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -54,5 +54,12 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy (master only)') {
+            when { branch 'master' }
+            steps {
+                build job: 'deploy-theia-tree-editor-npm', wait: false
+            }
+        }
     }
 }

@@ -1,0 +1,11 @@
+node_modules
+.browser_modules
+dist
+lib
+*.log
+
+.idea/
+
+.DS_Store
+
+.yalc
