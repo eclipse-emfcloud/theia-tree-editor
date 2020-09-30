@@ -1,0 +1,57 @@
+{
+  "name": "@eclipse-emfcloud/theia-tree-editor",
+  "version": "0.6.0",
+  "license": "(EPL-2.0 OR MIT)",
+  "author": {
+    "name": "EclipseSource"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eclipse-emfcloud/theia-tree-editor.git"
+  },
+  "homepage": "https://www.eclipse.org/emfcloud/",
+  "bugs": "https://github.com/eclipse-emfcloud/theia-tree-editor/issues",
+  "main": "lib/browser/index.js",
+  "typings": "lib/browser/index.d.ts",
+  "files": [
+    "lib",
+    "src",
+    "style"
+  ],
+  "dependencies": {
+    "@jsonforms/core": "2.4.0",
+    "@jsonforms/react": "2.4.0",
+    "@jsonforms/vanilla-renderers": "2.4.0",
+    "@theia/core": "^1.0.0",
+    "@theia/workspace": "^1.0.0",
+    "react": "^16.9.13",
+    "react-dom": "^16.9.13",
+    "react-redux": "^7.1.5",
+    "redux": "^4.0.4",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.16.0",
+    "@typescript-eslint/parser": "^2.16.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-header": "^3.0.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-no-null": "^1.0.2",
+    "eslint-plugin-react": "^7.20.3",
+    "rimraf": "latest",
+    "semver": "^6.3.0",
+    "typescript": "latest"
+  },
+  "scripts": {
+    "prepare": "yarn run clean && yarn run build",
+    "clean": "rimraf lib",
+    "lint": "eslint -c ../.eslintrc.js --ext .ts,.tsx ./src",
+    "build": "tsc && yarn run lint",
+    "watch": "tsc -w",
+    "publish:latest": "yarn publish --tag latest",
+    "publish:next": "yarn publish --new-version \"$(semver $npm_package_version -i minor)-next.$(git rev-parse --short HEAD)\" --tag next"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "extends": "../configs/base.tsconfig",
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "outDir": "lib",
+    "baseUrl": "."
+  },
+  "include": [
+    "src"
+  ]
+}

@@ -9,3 +9,6 @@ lib
 .DS_Store
 
 .yalc
+
+example/*-app/*
+!example/*-app/package.json

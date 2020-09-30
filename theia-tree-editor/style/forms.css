@@ -8,6 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
+
 :root {
   --validation-error-color: #f44336;
 }
@@ -17,6 +18,7 @@
 }
 
 /* Controls */
+
 .control {
   display: flex;
   flex: 1;
@@ -49,8 +51,7 @@
   margin-left: 0;
 }
 
-.control>.input-description,
-.control>.validation {
+.control>.input-description, .control>.validation {
   font-size: 0.75rem;
   text-align: left;
   margin-top: 0.25em;
@@ -59,8 +60,7 @@
   line-height: 1em;
 }
 
-.control>.validation.validation_error,
-.control>.validate.invalid {
+.control>.validation.validation_error, .control>.validate.invalid {
   color: var(--validation-error-color);
 }
 
@@ -69,7 +69,7 @@
 }
 
 .control>input[disabled] {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 /*
@@ -106,6 +106,7 @@
 /*
  * Group
  */
+
 .group-layout {
   display: flex;
   flex-direction: column;
@@ -126,6 +127,7 @@
 /*
  * Array
  */
+
 .array-layout {
   display: flex;
   flex: 1;
@@ -157,10 +159,10 @@
   border-bottom: none;
 }
 
-
 /*
  * Array table.
  */
+
 .array-table-layout.control>header {
   display: flex;
   margin: 0.25em;

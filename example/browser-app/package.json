@@ -1,0 +1,36 @@
+{
+  "private": true,
+  "name": "browser-app",
+  "version": "0.0.0",
+  "dependencies": {
+    "@theia/core": "latest",
+    "@theia/editor": "latest",
+    "@theia/filesystem": "latest",
+    "@theia/markers": "latest",
+    "@theia/messages": "latest",
+    "@theia/monaco": "latest",
+    "@theia/navigator": "latest",
+    "@theia/preferences": "latest",
+    "@theia/process": "latest",
+    "@theia/terminal": "latest",
+    "@theia/workspace": "latest",
+    "tree-editor-example": "0.0.0"
+  },
+  "devDependencies": {
+    "@theia/cli": "latest"
+  },
+  "scripts": {
+    "prepare": "theia build --mode development",
+    "start": "theia start --port=3000 --loglevel=debug --root-dir=../workspace",
+    "watch": "theia build --watch --mode development --port=3000 --loglevel=debug"
+  },
+  "theia": {
+    "frontend": {
+      "config": {
+        "applicationName": "Theia Tree Editor Dev Example",
+        "defaultTheme": "light"
+      }
+    },
+    "target": "browser"
+  }
+}

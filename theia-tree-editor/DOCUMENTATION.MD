@@ -2,9 +2,11 @@ This package provides a framework for the creation of tree master detail editors
 The detail is rendered with JSON Forms.
 
 # Configuring a tree editor
+
 To use the tree editor for a custom model, the following classes and interfaces need to be extended resp. implemented.
 
 ## BaseTreeEditorWidget
+
 The implementation of this abstract class is the the whole editor widget containing a tree and a detail
 whose content depends on the node selected in the tree.
 
@@ -26,6 +28,7 @@ In case you have a resource given as a URI but need custom implementations for l
 the data, you should consider extending [NavigatableTreeEditorWidget](src/browser/navigatable-tree-editor-widget.ts).
 
 ## Theia Services
+
 To properly show labels and icons for the tree nodes in your editor,
 you need to implement and register an implementation of Theia's `LabelProviderContribution`.
 The implemented label provider contribution identifies editor nodes, which it handles,
@@ -36,10 +39,11 @@ This could also be done in a separate label provider contribution but for simpli
 sake we handle both in the same contribution.
 
 A simple label provider contributions could look likes this.
+
 ```typescript
-import { injectable } from 'inversify';
-import { LabelProviderContribution } from '@theia/core/lib/browser';
-import { TreeEditor } from 'theia-tree-editor';
+import { injectable } from "inversify";
+import { LabelProviderContribution } from "@theia/core/lib/browser";
+import { TreeEditor } from "@eclipse-emfcloud/theia-tree-editor";
 
 const ICON_CLASSES: Map<string, string> = new Map([
   // Map types to icon css classes here
@@ -48,45 +52,50 @@ const ICON_CLASSES: Map<string, string> = new Map([
 
 @injectable()
 export class MyLabelProviderContribution implements LabelProviderContribution {
-
   public canHandle(element: object): number {
-    if ((TreeEditor.Node.is(element) || TreeEditor.CommandIconInfo.is(element))
-      && element.editorId === MyTreeEditor.EDITOR_ID) {
-      return 100;
-    }
-    return 0;
+  if (
+    (TreeEditor.Node.is(element) || TreeEditor.CommandIconInfo.is(element)) &&
+    element.editorId === MyTreeEditor.EDITOR_ID
+  ) {
+    return 100;
+  }
+  return 0;
   }
 
   getIcon(element: object): string | undefined {
-    if (TreeEditor.CommandIconInfo.is(element)) {
-      return ICON_CLASSES.get(element.type);
-    } else if (TreeEditor.Node.is(element)) {
-      return ICON_CLASSES.get(element.jsonforms.type);
-    }
-    return undefined;
+  if (TreeEditor.CommandIconInfo.is(element)) {
+    return ICON_CLASSES.get(element.type);
+  } else if (TreeEditor.Node.is(element)) {
+    return ICON_CLASSES.get(element.jsonforms.type);
+  }
+  return undefined;
   }
 
   getName(element: object): string | undefined {
-      return TreeEditor.Node.is(element) ? element.name : undefined;
+  return TreeEditor.Node.is(element) ? element.name : undefined;
   }
 }
 ```
 
 ## Services in the TreeEditor namespace
+
 These services need to be implemented to define how the tree editor retrieves and presents the data.
 All these interfaces and a definition of the tree editor's node model can be found in
 [interfaces.ts](src/browser/interfaces.ts)
 
 ### TreeEditor.NodeFactory
+
 The `NodeFactory` specifies how tree nodes are created from instance data.
 For every created node, this should set the nodes' `editorId` property
 to the same identifier to allow the label provider contribution indentifying them.
 
 ### TreeEditor.ModelService
+
 The `ModelService` provides logic to get everything needed to render the detail for a tree node.
 This includes providing the data, a schema for the data, and a UI schema specifying how the data is rendered.
 
 # Registering a custom tree editor
+
 To use the editor, you need to bind it in your frontend module (which exports a `ContainerModule`).
 However, you should not bind your implementations directly to the interfaces provided
 by the json forms tree package because this creates conflicts when when using multiple tree editor implementations in the same Theia instance.
@@ -109,34 +118,38 @@ export default new ContainerModule(bind => {
   bind(MyLabelProviderContribution).toSelf();
 
   bind<WidgetFactory>(WidgetFactory).toDynamicValue(context => ({
-    id: 'my-theia-tree-editor',
-    createWidget: (options: NavigatableWidgetOptions) => {
+  id: "my-theia-tree-editor",
+  createWidget: (options: NavigatableWidgetOptions) => {
+    // This creates a new inversify Container with all the basic services needed for a theia tree editor.
+    const treeContainer = createBasicTreeContainter(
+    context.container,
+    MyEditorWidget,
+    MyModelService,
+    MyNodeFactory
+    );
 
-      // This creates a new inversify Container with all the basic services needed for a theia tree editor.
-      const treeContainer = createBasicTreeContainter(
-        context.container,
-        MyEditorWidget,
-        MyModelService,
-        MyNodeFactory
-      );
+    // Our example tree editor needs additional options. So, we bind them in the container created before
+    const uri = new URI(options.uri);
+    treeContainer
+    .bind(NavigatableTreeEditorWidgetOptions)
+    .toConstantValue({ uri });
 
-      // Our example tree editor needs additional options. So, we bind them in the container created before
-      const uri = new URI(options.uri);
-      treeContainer.bind(NavigatableTreeEditorWidgetOptions).toConstantValue({ uri });
-
-      // Finally, we create a new editor by telling the container to retrieve an instance of our editor implementation
-      return treeContainer.get(MyTreeEditorWidget);
-    }
+    // Finally, we create a new editor by telling the container to retrieve an instance of our editor implementation
+    return treeContainer.get(MyTreeEditorWidget);
+  }
   }));
 });
 ```
 
 ## Binding for use outside the tree editor widget
+
 If you need to use your implementations of `TreeEditor.NodeFactory` or `TreeEditor.LabelProvider`,
 you have two methods to register them safely.
 
 ### Bind to self
+
 You can bind a service to itself. Then you can get them injected by referencing your implementation directly.
+
 ```typescript
 // bind (e.g. when creating a ContainerModule)
 bind(MyNodeFactory).toSelf();
@@ -146,7 +159,9 @@ bind(MyNodeFactory).toSelf();
 ```
 
 ### Bind to name
+
 The second method is binding to the original interface and specifying a name constraint that needs to be provided when getting the service injected.
+
 ```typescript
 // bind (e.g. when creating a ContainerModule)
 bind(MyNodeFactory).to(TreeEditor.NodeFactory).whenTargetNamed("my-tree");

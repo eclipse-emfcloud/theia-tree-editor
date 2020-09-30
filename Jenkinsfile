@@ -50,7 +50,9 @@ pipeline {
         stage('Build') {
             steps {
                 container('node') {
-                    sh "yarn install"
+                    dir('theia-tree-editor') {
+                        sh "yarn install"
+                    }
                 }
             }
         }

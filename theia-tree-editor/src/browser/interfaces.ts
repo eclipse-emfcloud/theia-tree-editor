@@ -128,7 +128,7 @@ export namespace TreeEditor {
          * @param parent The created node's parent node
          * @param property The JSON property which this node's data is contained in
          * @param indexOrKey If the data is inserted in an array property, this is the index it is inserted at.
-         *                   If the data is inserted into an object, this is the key the data is associated with.
+         *           If the data is inserted into an object, this is the key the data is associated with.
          */
         mapData(
             data: any,
