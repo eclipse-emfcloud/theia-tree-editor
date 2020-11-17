@@ -9,6 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import { DefaultResourceProvider, ILogger, Resource } from '@theia/core/lib/common';
+import { EditorPreferences } from '@theia/editor/lib/browser';
 import { WorkspaceService } from '@theia/workspace/lib/browser/workspace-service';
 import { postConstruct } from 'inversify';
 
@@ -29,7 +30,8 @@ export abstract class ResourceTreeEditorWidget extends NavigatableTreeEditorWidg
         readonly widget_id: string,
         protected readonly options: NavigatableTreeEditorOptions,
         protected readonly provider: DefaultResourceProvider,
-        protected readonly nodeFactory: TreeEditor.NodeFactory
+        protected readonly nodeFactory: TreeEditor.NodeFactory,
+        protected readonly editorPreferences: EditorPreferences
     ) {
         super(
             treeWidget,
@@ -52,6 +54,18 @@ export abstract class ResourceTreeEditorWidget extends NavigatableTreeEditorWidg
             },
             _ => console.error(`Could not create ressource for uri ${uri}`)
         );
+
+        this.autoSave = this.editorPreferences['editor.autoSave'];
+        this.editorPreferences.onPreferenceChanged(ev => {
+            if (ev.preferenceName === 'editor.autoSave') {
+                this.autoSave = ev.newValue === 'on' ? 'on' : 'off';
+            }
+        });
+        this.onDirtyChanged(ev => {
+            if (this.autoSave === 'on' && this.dirty) {
+                this.save();
+            }
+        });
     }
 
     /**
@@ -101,7 +115,7 @@ export abstract class ResourceTreeEditorWidget extends NavigatableTreeEditorWidg
 
             // Data was changed in place but need to trigger tree updates.
             this.treeWidget.updateDataForSubtree(node.parent, node.parent.jsonforms.data);
-            this.setDirty(true);
+            this.handleChanged();
         }
     }
 
@@ -117,11 +131,22 @@ export abstract class ResourceTreeEditorWidget extends NavigatableTreeEditorWidg
         }
         node.jsonforms.data[property].push(newData);
         this.treeWidget.updateDataForSubtree(node, node.jsonforms.data);
-        this.setDirty(true);
+        this.handleChanged();
     }
 
     protected handleFormUpdate(data: any, node: TreeEditor.Node): void {
         this.treeWidget.updateDataForSubtree(node, data);
-        this.setDirty(true);
+        this.handleChanged();
+    }
+
+    /**
+     * Called when a change occurred. Handle based on the autoSave flag.
+     */
+    protected handleChanged(): void {
+        if (this.autoSave === 'on') {
+            this.save();
+        } else {
+            this.setDirty(true);
+        }
     }
 }

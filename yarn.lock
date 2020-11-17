@@ -1201,7 +1201,7 @@
     unzip-stream "^0.3.0"
     vscode-debugprotocol "^1.32.0"
 
-"@theia/editor@^1.6.0", "@theia/editor@latest":
+"@theia/editor@^1.0.0", "@theia/editor@^1.6.0", "@theia/editor@latest":
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/@theia/editor/-/editor-1.6.0.tgz#3835f0f12dff613aa73e8b206c0e7fa53bd93199"
   integrity sha512-DEUCenOoT2HgxVroXVQlYksJE3ezkWmhMLFZPEuNgoV3d9Cu4jLsyQvpb/2fWkgX7MsDmML/3dPr0i4UfOSXFw==

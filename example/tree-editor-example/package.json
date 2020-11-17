@@ -12,6 +12,7 @@
   "dependencies": {
     "@eclipse-emfcloud/theia-tree-editor": "0.6.0",
     "@theia/core": "latest",
+    "@theia/editor": "latest",
     "@theia/filesystem": "latest",
     "@theia/workspace": "latest",
     "uuid": "^3.3.2"

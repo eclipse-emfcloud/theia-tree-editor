@@ -24,7 +24,7 @@ import { AddCommandProperty, MasterTreeWidget } from './master-tree-widget';
 @injectable()
 export abstract class BaseTreeEditorWidget extends BaseWidget implements Saveable {
     public dirty = false;
-    public autoSave: 'off';
+    public autoSave: 'on' | 'off' = 'off';
     private splitPanel: SplitPanel;
 
     protected readonly onDirtyChangedEmitter = new Emitter<void>();

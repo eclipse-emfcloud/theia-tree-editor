@@ -17,6 +17,7 @@ import {
 } from '@eclipse-emfcloud/theia-tree-editor';
 import { Title, Widget } from '@theia/core/lib/browser';
 import { DefaultResourceProvider, ILogger } from '@theia/core/lib/common';
+import { EditorPreferences } from '@theia/editor/lib/browser';
 import { WorkspaceService } from '@theia/workspace/lib/browser/workspace-service';
 import { inject, injectable } from 'inversify';
 
@@ -35,7 +36,9 @@ export class TreeEditorWidget extends ResourceTreeEditorWidget {
         @inject(DefaultResourceProvider)
         protected provider: DefaultResourceProvider,
         @inject(TreeEditor.NodeFactory)
-        protected readonly nodeFactory: TreeEditor.NodeFactory
+        protected readonly nodeFactory: TreeEditor.NodeFactory,
+        @inject(EditorPreferences)
+        protected readonly editorPreferences: EditorPreferences
     ) {
         super(
             treeWidget,
@@ -45,7 +48,8 @@ export class TreeEditorWidget extends ResourceTreeEditorWidget {
             TreeEditorWidget.WIDGET_ID,
             options,
             provider,
-            nodeFactory
+            nodeFactory,
+            editorPreferences
         );
     }
 
