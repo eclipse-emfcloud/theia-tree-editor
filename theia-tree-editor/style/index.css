@@ -8,6 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
+
 svg {
   border: none;
 }
@@ -25,12 +26,12 @@ button[type="button"] {
 }
 
 .theia-tree-editor-tree, .theia-tree-editor-form {
-  overflow-y: auto;
+  overflow: auto;
 }
 
 .theia-tree-editor-tree {
-  min-width: 250px;
-  max-width: 500px;
+  min-width: 150px;
+  max-width: 450px;
 }
 
 .theia-tree-editor-tree .tree-icon-container {
@@ -59,17 +60,17 @@ button[type="button"] {
   margin: 1em;
 }
 
-.theia-tree-editor .control > label {
+.theia-tree-editor .control>label {
   color: var(--theia-ui-font-color0);
   font-size: var(--theia-ui-font-size2);
   order: -1;
   font-weight: bold;
 }
 
-.theia-tree-editor .control > .validation {
+.theia-tree-editor .control>.validation {
   order: -1;
 }
 
-.theia-tree-editor .control > .input-description {
+.theia-tree-editor .control>.input-description {
   color: var(--theia-content-font-color0);
 }
