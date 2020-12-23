@@ -256,6 +256,26 @@ export class MasterTreeWidget extends TreeWidget {
     }
 
     /**
+     * Overrides super method because there are no context menus on nodes of the tree editor.
+     * Without this, the editor tab flashes when right clicking a tree node
+     * because an empty context menu is opened and immediately closed again.
+     * This causes unfocus and refocus of the editor tab leading to a 'flash'.
+     *
+     * Override this in case you need a context menu on nodes or somewhere else in the tree.
+     *
+     * ---
+     *
+     * Handle the context menu click event.
+     * - The context menu click event is triggered by the right-click.
+     * @param node the tree node if available.
+     * @param event the right-click mouse event.
+     */
+    protected handleContextMenuEvent(node: TreeNode | undefined, event: React.MouseEvent<HTMLElement>): void {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+
+    /**
      * Updates the data of the given node with the new data. Refreshes the tree if necessary.
      * Note that this method will only work properly if only data relevant for this node was changed.
      * If data of the subtree was changed, too, please call updateDataForSubtree instead.
