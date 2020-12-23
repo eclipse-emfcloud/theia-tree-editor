@@ -1,6 +1,10 @@
 This package provides a framework for the creation of tree master detail editors in Theia.
 The detail is rendered with JSON Forms.
 
+The [development example](../example) in this repository shows the implementation of a basic tree editor based on this framework.
+Starting from there is probably the easiest approach to implementing a new editor.
+Nevertheless, we explain the basic parts of the framework in this documentation.
+
 # Configuring a tree editor
 
 To use the tree editor for a custom model, the following classes and interfaces need to be extended resp. implemented.
@@ -10,24 +14,43 @@ To use the tree editor for a custom model, the following classes and interfaces 
 The implementation of this abstract class is the the whole editor widget containing a tree and a detail
 whose content depends on the node selected in the tree.
 
-You need to implement `addNode` and `deleteNode` to define how nodes are added to and deleted from the model opened in the editor.
+The following methods need to be implemented:
+
+- `addNode` and `deleteNode`: They define how nodes are added to and deleted from the model opened in the editor.
 This includes notifying the tree which nodes it has to add resp. remove.
+- `handleFormUpdate`: This is called whenever the user changes data in the detail view.
+- `save`: Handles the common save command (e.g. if the user presses Ctrl+S in Theia).
+By default nothing is done when `save` is called.
 
-Furthermore, you need to implement `handleFormUpdate`. This is called whenever the user changes data in the detail view.
-
-`save` needs to be overridden if the tree editor should react to the common save command (e.g. if the user presses Ctrl+S in Theia).
-By default nothing is done when save is called.
-
-If you want to implement an editor which uses a resource which is loaded from a uri,
+If you want to implement an editor that uses a resource loaded from a URI,
 you should consider extending [ResourceTreeEditorWidget](src/browser/resource/resource-tree-editor-widget.ts).
-This already provides basic implementations for load, save and dirty marker handling, as well as
-adding and removing nodes. This is a good starting point for editors that "simply"
-show files from the theia workspace and don't need custom file retrieval.
+This already provides basic implementations for the methods listed above.
+This is a good starting point for editors that "simply" show files from the theia workspace and don't need custom file retrieval.
+It also works for other URIs as long as there's a suitable `ResourceResolver` (this is part of Theia itself).
 
-In case you have a resource given as a URI but need custom implementations for loading and saving
-the data, you should consider extending [NavigatableTreeEditorWidget](src/browser/navigatable-tree-editor-widget.ts).
+In case you have a resource given as a URI but need custom implementations for loading and saving in the tree editor,
+consider extending [NavigatableTreeEditorWidget](src/browser/navigatable-tree-editor-widget.ts).
 
 ## Theia Services
+
+### Widget opener and contributions
+
+To conveniently provide a `WidgetOpenHandler` as well as command and menu contributions for the editor's add menu,
+extend `BaseTreeEditorContribution` and bind your implementation in your container module.
+
+```typescript
+// Extend BaseTreeEditorContribution
+export class MyTreeContribution extends BaseTreeEditorContribution {
+  // ...
+}
+
+// in container module:
+bind(OpenHandler).to(MyTreeContribution);
+bind(MenuContribution).to(MyTreeContribution);
+bind(CommandContribution).to(MyTreeContribution);
+```
+
+### Label provider
 
 To properly show labels and icons for the tree nodes in your editor,
 you need to implement and register an implementation of Theia's `LabelProviderContribution`.
@@ -81,13 +104,13 @@ export class MyLabelProviderContribution implements LabelProviderContribution {
 
 These services need to be implemented to define how the tree editor retrieves and presents the data.
 All these interfaces and a definition of the tree editor's node model can be found in
-[interfaces.ts](src/browser/interfaces.ts)
+[interfaces.ts](../theia-tree-editor/src/browser/interfaces.ts)
 
 ### TreeEditor.NodeFactory
 
 The `NodeFactory` specifies how tree nodes are created from instance data.
-For every created node, this should set the nodes' `editorId` property
-to the same identifier to allow the label provider contribution indentifying them.
+For every created node, this should set the node's `editorId` property
+to the same identifier to allow the label provider contribution identifying them.
 
 ### TreeEditor.ModelService
 
