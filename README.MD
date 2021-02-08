@@ -9,6 +9,7 @@ Dependencies:
 
 Theia tree editor provides a framework to build tree master detail editors
 for editing model based data in Eclipse Theia.
+An overview over the tree editor's features and customization capabilities can be found in this [blog post](https://eclipsesource.com/blogs/2021/02/03/how-to-build-a-tree-editor-in-eclipse-theia/).
 
 The framework itself is located in [theia-tree-editor](./theia-tree-editor).
 Documentation about the editor's components and how to set up a custom editor
@@ -20,7 +21,29 @@ For more information, please visit the [EMF.cloud Website](https://www.eclipse.o
 If you have questions, contact us on our [spectrum chat](https://spectrum.chat/emfcloud/)
 and have a look at our [communication and support options](https://www.eclipse.org/emfcloud/contact/).
 
-## Setup
+## Quick Start via Yeoman Generator
+
+Probably the simplest way to get started with building your own editor is to look at an example. You can actually adapt the existing data model and learn how to customize the framework based on your specific requirements.
+
+To get started, we provide a Yeoman generator that will create your own template project with a working example. The template is integrated into the Theia extension generator.
+To create the editor template project, install the extension generator and launch it:
+
+```
+npm install -g yo generator-theia-extension
+mkdir my-extension && cd my-extension
+yo theia-extension
+```
+
+For the extensions type, select “TreeEditor”
+
+The template generator creates a tree editor based on an example data model. It also creates a Theia product that embeds the editor, so you can directly try it out with the following commands:
+
+```
+cd browser-app
+yarn start
+```
+
+## Developer Setup
 
 Install [nvm](https://github.com/creationix/nvm#install-script).
 
