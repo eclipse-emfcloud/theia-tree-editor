@@ -123,7 +123,7 @@ To use the editor, you need to bind it in your frontend module (which exports a 
 However, you should not bind your implementations directly to the interfaces provided
 by the json forms tree package because this creates conflicts when when using multiple tree editor implementations in the same Theia instance.
 
-Instead, we provided a utility method `createBasicTreeContainter` that creates a new child container of the current context
+Instead, we provided a utility method `createBasicTreeContainer` that creates a new child container of the current context
 and binds all needed services inside the container.
 Because the bindings are then encapsulated in the child container, other editors are not affected by them.
 If you have additional services or values you need to bind for the creation of your editor,
@@ -144,7 +144,7 @@ export default new ContainerModule(bind => {
   id: "my-theia-tree-editor",
   createWidget: (options: NavigatableWidgetOptions) => {
     // This creates a new inversify Container with all the basic services needed for a theia tree editor.
-    const treeContainer = createBasicTreeContainter(
+    const treeContainer = createBasicTreeContainer(
     context.container,
     MyEditorWidget,
     MyModelService,

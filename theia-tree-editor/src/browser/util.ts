@@ -52,7 +52,7 @@ function createTreeWidget(
  * @param modelService The tree editor's model service
  * @param nodeFactory The tree editor's node factory
  */
-export function createBasicTreeContainter(
+export function createBasicTreeContainer(
     parent: interfaces.Container,
     treeEditorWidget: interfaces.Newable<BaseTreeEditorWidget>,
     modelService: interfaces.Newable<TreeEditor.ModelService>,
