@@ -120,7 +120,7 @@ export namespace TreeEditor {
          * @param treeData The tree's data
          * @returns The tree's shown root nodes (not to confuse with the invisible RootNode)
          */
-        mapDataToNodes(treeData: TreeData): Node[];
+        mapDataToNodes(treeData: TreeData): MaybePromise<Node[]>;
 
         /**
          * Creates the corresponding TreeNode for the given data.
@@ -136,7 +136,7 @@ export namespace TreeEditor {
             parent?: Node,
             property?: string,
             indexOrKey?: number | string
-        ): Node;
+        ): MaybePromise<Node>;
 
         /**
          * @param node The node to create a child for

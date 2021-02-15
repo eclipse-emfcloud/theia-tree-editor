@@ -100,7 +100,7 @@ export abstract class ResourceTreeEditorWidget extends NavigatableTreeEditorWidg
         this.treeWidget.setData(treeData);
     }
 
-    protected deleteNode(node: Readonly<TreeEditor.Node>): void {
+    protected async deleteNode(node: Readonly<TreeEditor.Node>): Promise<void> {
         if (node.parent && TreeEditor.Node.is(node.parent)) {
             const propertyData = node.parent.jsonforms.data[node.jsonforms.property];
             if (Array.isArray(propertyData)) {
@@ -114,12 +114,12 @@ export abstract class ResourceTreeEditorWidget extends NavigatableTreeEditorWidg
             }
 
             // Data was changed in place but need to trigger tree updates.
-            this.treeWidget.updateDataForSubtree(node.parent, node.parent.jsonforms.data);
+            await this.treeWidget.updateDataForSubtree(node.parent, node.parent.jsonforms.data);
             this.handleChanged();
         }
     }
 
-    protected addNode({ node, type, property }: AddCommandProperty): void {
+    protected async addNode({ node, type, property }: AddCommandProperty): Promise<void> {
         // Create an empty object that only contains its type identifier
         const newData: { [k: string]: any } = {};
         newData[this.getTypeProperty()] = type;
@@ -130,12 +130,12 @@ export abstract class ResourceTreeEditorWidget extends NavigatableTreeEditorWidg
             node.jsonforms.data[property] = [];
         }
         node.jsonforms.data[property].push(newData);
-        this.treeWidget.updateDataForSubtree(node, node.jsonforms.data);
+        await this.treeWidget.updateDataForSubtree(node, node.jsonforms.data);
         this.handleChanged();
     }
 
-    protected handleFormUpdate(data: any, node: TreeEditor.Node): void {
-        this.treeWidget.updateDataForSubtree(node, data);
+    protected async handleFormUpdate(data: any, node: TreeEditor.Node): Promise<void> {
+        await this.treeWidget.updateDataForSubtree(node, data);
         this.handleChanged();
     }
 
