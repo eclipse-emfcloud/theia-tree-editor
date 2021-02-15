@@ -98,14 +98,17 @@ export class DetailFormWidget extends BaseWidget {
         return stylingReducer(vanillaStyles, registerStylesAction);
     }
 
-    setSelection(selectedNode: TreeEditor.Node): void {
+    async setSelection(selectedNode: TreeEditor.Node): Promise<void> {
         this.selectedNode = selectedNode;
 
+        const data = await this.modelService.getDataForNode(this.selectedNode);
+        const schema = await this.modelService.getSchemaForNode(this.selectedNode);
+        const uiSchema = await this.modelService.getUiSchemaForNode(this.selectedNode);
         this.store.dispatch(
             Actions.init(
-                this.modelService.getDataForNode(this.selectedNode),
-                this.modelService.getSchemaForNode(this.selectedNode),
-                this.modelService.getUiSchemaForNode(this.selectedNode),
+                data,
+                schema,
+                uiSchema,
                 {
                     refParserOptions: {
                         dereference: { circular: 'ignore' }
