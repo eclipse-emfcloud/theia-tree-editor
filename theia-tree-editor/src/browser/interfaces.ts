@@ -9,6 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import { JsonSchema, UISchemaElement } from '@jsonforms/core';
+import { MaybePromise } from '@theia/core';
 import {
     CompositeTreeNode,
     DecoratedTreeNode,
@@ -74,7 +75,7 @@ export namespace TreeEditor {
          * @param node The tree node
          * @returns The data associated with the node
          */
-        getDataForNode(node: Node): any;
+        getDataForNode(node: Node): MaybePromise<any>;
 
         /**
          * Returns the JsonSchema describing how the node's data should be rendered.
@@ -82,7 +83,7 @@ export namespace TreeEditor {
          * @param node The tree node
          * @returns the JsonSchema describing the node's data or undefined to generate a schema.
          */
-        getSchemaForNode(node: Node): JsonSchema | undefined;
+        getSchemaForNode(node: Node): MaybePromise<JsonSchema> | undefined;
 
         /**
          * Returns the ui schema describing how the node's data should be rendered.
@@ -91,7 +92,7 @@ export namespace TreeEditor {
          * @param node The tree node
          * @returns The ui schema for the node's data or undefined to generate a ui schema.
          */
-        getUiSchemaForNode(node: Node): UISchemaElement | undefined;
+        getUiSchemaForNode(node: Node): MaybePromise<UISchemaElement> | undefined;
 
         /**
          * This mapping describes which child nodes can be created for a given type.
