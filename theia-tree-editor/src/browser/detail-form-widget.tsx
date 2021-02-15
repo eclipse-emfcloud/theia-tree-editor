@@ -50,16 +50,16 @@ export class DetailFormWidget extends BaseWidget {
         return this.changeEmitter.event;
     }
 
-    setSelection(selectedNode: TreeEditor.Node): void {
+    async setSelection(selectedNode: TreeEditor.Node): Promise<void> {
         this.selectedNode = selectedNode;
         this.renderForms();
     }
 
-    protected renderForms(): void {
+    protected async renderForms(): Promise<void> {
         if (this.selectedNode) {
-            const data = this.modelService.getDataForNode(this.selectedNode);
-            const schema = this.modelService.getSchemaForNode(this.selectedNode);
-            const uiSchema = this.modelService.getUiSchemaForNode(this.selectedNode);
+            const data = await this.modelService.getDataForNode(this.selectedNode);
+            const schema = await this.modelService.getSchemaForNode(this.selectedNode);
+            const uiSchema = await this.modelService.getUiSchemaForNode(this.selectedNode);
 
             ReactDOM.render(
                 <div className={JSON_FORMS_CONTAINER_CSS_CLASS}>
@@ -111,7 +111,7 @@ export class DetailFormWidget extends BaseWidget {
     }
 }
 
-export type JsonFormsDetailConfig = Omit<JsonFormsInitStateProps & JsonFormsReactProps, 'data' | 'onChange' |'schema'|  'uischema'>;
+export type JsonFormsDetailConfig = Omit<JsonFormsInitStateProps & JsonFormsReactProps, 'data' | 'onChange' | 'schema' | 'uischema'>;
 
 /** Default json forms configuration using the default vanilla cells and renderers. */
 export const jsonFormsConfig: JsonFormsDetailConfig = {
