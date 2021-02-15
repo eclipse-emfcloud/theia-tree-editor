@@ -50,7 +50,7 @@ export class DetailFormWidget extends BaseWidget {
         return this.changeEmitter.event;
     }
 
-    setSelection(selectedNode: TreeEditor.Node): void {
+    async setSelection(selectedNode: TreeEditor.Node): Promise<void> {
         this.selectedNode = selectedNode;
         this.renderForms();
     }
