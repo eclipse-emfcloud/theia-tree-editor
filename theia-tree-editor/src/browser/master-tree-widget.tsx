@@ -226,7 +226,7 @@ export class MasterTreeWidget extends TreeWidget {
     protected async refreshModelChildren(): Promise<void> {
         if (this.model.root && TreeEditor.RootNode.is(this.model.root)) {
             const newTree =
-                !this.data || this.data.error ? [] : this.nodeFactory.mapDataToNodes(this.data);
+                !this.data || this.data.error ? [] : await this.nodeFactory.mapDataToNodes(this.data);
             this.model.root.children = newTree;
             this.model.refresh();
         }
@@ -293,9 +293,9 @@ export class MasterTreeWidget extends TreeWidget {
     /**
      * Updates the data of the given node and recreates its whole subtree. Refreshes the tree.
      */
-    public updateDataForSubtree(node: TreeEditor.Node, data: any): void {
+    public async updateDataForSubtree(node: TreeEditor.Node, data: any): Promise<void> {
         Object.assign(node.jsonforms.data, data);
-        const newNode = this.nodeFactory.mapData(data);
+        const newNode = await this.nodeFactory.mapData(data);
         node.name = newNode.name;
         node.children = newNode.children;
         this.model.refresh();
@@ -308,13 +308,16 @@ export class MasterTreeWidget extends TreeWidget {
      * @param data The data array to generate the new tree nodes from
      * @param property The property of the parent data which will contain the new nodes.
      */
-    public addChildren(node: TreeEditor.Node, data: any[], property: string): void {
+    public async addChildren(node: TreeEditor.Node, data: any[], property: string): Promise<void> {
         const currentValue = node.jsonforms.data[property];
         let index = 0;
         if (Array.isArray(currentValue)) {
             index = currentValue.length;
         }
-        data.map((d, i) => this.nodeFactory.mapData(d, node, property, index + i));
+        const iterableEntriesWithIndex = data.map((d, i) => ({ d, i }));
+        for (const { d, i } of iterableEntriesWithIndex) {
+            await this.nodeFactory.mapData(d, node, property, index + i);
+        }
         this.updateIndex(node, property);
         this.model.refresh();
     }

@@ -120,7 +120,7 @@ export abstract class BaseTreeEditorWidget extends BaseWidget implements Saveabl
      *
      * @param node The tree node to delete
      */
-    protected abstract deleteNode(node: Readonly<TreeEditor.Node>): void;
+    protected abstract deleteNode(node: Readonly<TreeEditor.Node>): Promise<void>;
 
     /**
      * Add a node to the tree.
@@ -132,7 +132,7 @@ export abstract class BaseTreeEditorWidget extends BaseWidget implements Saveabl
         node,
         type,
         property
-    }: AddCommandProperty): void;
+    }: AddCommandProperty): Promise<void>;
 
     protected onAfterAttach(msg: Message): void {
         this.splitPanel.addWidget(this.treeWidget);
@@ -160,7 +160,7 @@ export abstract class BaseTreeEditorWidget extends BaseWidget implements Saveabl
     protected abstract handleFormUpdate(
         data: any,
         node: TreeEditor.Node
-    ): void;
+    ): Promise<void>;
 
     public save(): void {
         // do nothing by default
