@@ -19,16 +19,14 @@
     "style"
   ],
   "dependencies": {
-    "@jsonforms/core": "2.4.0",
-    "@jsonforms/react": "2.4.0",
-    "@jsonforms/vanilla-renderers": "2.4.0",
+    "@jsonforms/core": "^2.5.0",
+    "@jsonforms/react": "^2.5.0",
+    "@jsonforms/vanilla-renderers": "^2.5.0",
     "@theia/core": "^1.0.0",
     "@theia/editor": "^1.0.0",
     "@theia/workspace": "^1.0.0",
     "react": "^16.9.13",
     "react-dom": "^16.9.13",
-    "react-redux": "^7.1.5",
-    "redux": "^4.0.4",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
