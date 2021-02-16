@@ -314,7 +314,8 @@ export class MasterTreeWidget extends TreeWidget {
         if (Array.isArray(currentValue)) {
             index = currentValue.length;
         }
-        for (const { d, i } of data.map((d, i) => ({ d, i }))) {
+        const iterableEntriesWithIndex = data.map((d, i) => ({ d, i }));
+        for (const { d, i } of iterableEntriesWithIndex) {
             await this.nodeFactory.mapData(d, node, property, index + i);
         }
         this.updateIndex(node, property);

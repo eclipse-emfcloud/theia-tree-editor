@@ -83,7 +83,7 @@ export namespace TreeEditor {
          * @param node The tree node
          * @returns the JsonSchema describing the node's data or undefined to generate a schema.
          */
-        getSchemaForNode(node: Node): MaybePromise<JsonSchema> | undefined;
+        getSchemaForNode(node: Node): MaybePromise<JsonSchema | undefined>;
 
         /**
          * Returns the ui schema describing how the node's data should be rendered.
@@ -92,7 +92,7 @@ export namespace TreeEditor {
          * @param node The tree node
          * @returns The ui schema for the node's data or undefined to generate a ui schema.
          */
-        getUiSchemaForNode(node: Node): MaybePromise<UISchemaElement> | undefined;
+        getUiSchemaForNode(node: Node): MaybePromise<UISchemaElement | undefined>;
 
         /**
          * This mapping describes which child nodes can be created for a given type.

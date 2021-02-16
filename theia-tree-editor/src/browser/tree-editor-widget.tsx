@@ -9,7 +9,6 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import { Title } from '@phosphor/widgets';
-import { MaybePromise } from '@theia/core';
 import { BaseWidget, Message, Saveable, SplitPanel, Widget } from '@theia/core/lib/browser';
 import { Emitter, Event, ILogger } from '@theia/core/lib/common';
 import { WorkspaceService } from '@theia/workspace/lib/browser/workspace-service';
@@ -121,7 +120,7 @@ export abstract class BaseTreeEditorWidget extends BaseWidget implements Saveabl
      *
      * @param node The tree node to delete
      */
-    protected abstract deleteNode(node: Readonly<TreeEditor.Node>): MaybePromise<void>;
+    protected abstract deleteNode(node: Readonly<TreeEditor.Node>): Promise<void>;
 
     /**
      * Add a node to the tree.
@@ -133,7 +132,7 @@ export abstract class BaseTreeEditorWidget extends BaseWidget implements Saveabl
         node,
         type,
         property
-    }: AddCommandProperty): MaybePromise<void>;
+    }: AddCommandProperty): Promise<void>;
 
     protected onAfterAttach(msg: Message): void {
         this.splitPanel.addWidget(this.treeWidget);
@@ -161,7 +160,7 @@ export abstract class BaseTreeEditorWidget extends BaseWidget implements Saveabl
     protected abstract handleFormUpdate(
         data: any,
         node: TreeEditor.Node
-    ): MaybePromise<void>;
+    ): Promise<void>;
 
     public save(): void {
         // do nothing by default
