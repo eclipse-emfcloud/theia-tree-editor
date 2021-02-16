@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import { JsonFormsCore } from '@jsonforms/core';
-import { JsonForms } from '@jsonforms/react';
+import { JsonForms, JsonFormsInitStateProps, JsonFormsReactProps } from '@jsonforms/react';
 import {
     JsonFormsStyleContext,
     StyleContext,
@@ -63,23 +63,13 @@ export class DetailFormWidget extends BaseWidget {
 
             ReactDOM.render(
                 <div className={JSON_FORMS_CONTAINER_CSS_CLASS}>
-                    <JsonFormsStyleContext.Provider value={styleContextValue}>
+                    <JsonFormsStyleContext.Provider value={this.getStyles()}>
                         <JsonForms
                             data={data}
                             schema={schema}
                             uischema={uiSchema}
-                            cells={vanillaCells}
-                            renderers={vanillaRenderers}
                             onChange={this.jsonformsOnChange}
-                            config={{
-                                restrict: false,
-                                trim: false,
-                                showUnfocusedDescription: true,
-                                hideRequiredAsterisk: false
-                            }}
-                            refParserOptions={{
-                                dereference: { circular: 'ignore' }
-                            }}
+                            {...this.getJsonFormsConfig()}
                         />
                     </JsonFormsStyleContext.Provider>
                 </div>,
@@ -88,6 +78,24 @@ export class DetailFormWidget extends BaseWidget {
         } else {
             this.renderEmptyForms();
         }
+    }
+
+    /**
+     * Provides configuration for JsonForms rendering the detail forms.
+     * Unless the configuration actually changes,
+     * this should always return the same object to avoid unnecessary re-renders.
+     */
+    protected getJsonFormsConfig(): JsonFormsDetailConfig {
+        return jsonFormsConfig;
+    }
+
+    /**
+     * Returns the styles for the detail form.
+     * As long as the styles do not change,
+     * this should always return the same object to avoid unnecessary re-renders of the form.
+     */
+    protected getStyles(): StyleContext {
+        return styleContextValue;
     }
 
     protected renderEmptyForms(): void {
@@ -103,8 +111,27 @@ export class DetailFormWidget extends BaseWidget {
     }
 }
 
-// Default vanilla styles extend with theia-specific styling
-const styleContextValue: StyleContext = {
+export type JsonFormsDetailConfig = Omit<JsonFormsInitStateProps & JsonFormsReactProps, 'data' | 'onChange' |'schema'|  'uischema'>;
+
+/** Default json forms configuration using the default vanilla cells and renderers. */
+export const jsonFormsConfig: JsonFormsDetailConfig = {
+    cells: vanillaCells,
+    renderers: vanillaRenderers,
+    config: {
+        restrict: false,
+        trim: false,
+        showUnfocusedDescription: true,
+        hideRequiredAsterisk: false
+    },
+    refParserOptions: {
+        dereference: {
+            circular: 'ignore'
+        }
+    }
+};
+
+/** Default vanilla styles extend with theia-specific styling. */
+export const styleContextValue: StyleContext = {
     styles: [
         ...vanillaStyles,
         {
