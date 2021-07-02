@@ -10,16 +10,15 @@
     "src"
   ],
   "dependencies": {
-    "@eclipse-emfcloud/theia-tree-editor": "0.6.0",
-    "@theia/core": "latest",
-    "@theia/editor": "latest",
-    "@theia/filesystem": "latest",
-    "@theia/workspace": "latest",
-    "uuid": "^3.3.2"
+    "@theia/core": "^1.0.0",
+    "@theia/editor": "^1.0.0",
+    "@theia/filesystem": "^1.0.0",
+    "@theia/workspace": "^1.0.0",
+    "@eclipse-emfcloud/theia-tree-editor": "0.6.0"
   },
   "devDependencies": {
-    "rimraf": "latest",
-    "typescript": "latest"
+    "rimraf": "^2.6.1",
+    "typescript": "^3.9.2"
   },
   "scripts": {
     "prepare": "yarn run clean && yarn run build",

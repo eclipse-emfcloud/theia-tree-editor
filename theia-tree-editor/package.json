@@ -19,27 +19,18 @@
     "style"
   ],
   "dependencies": {
-    "@jsonforms/core": "^2.5.0",
-    "@jsonforms/react": "^2.5.0",
-    "@jsonforms/vanilla-renderers": "^2.5.0",
     "@theia/core": "^1.0.0",
     "@theia/editor": "^1.0.0",
     "@theia/workspace": "^1.0.0",
-    "react": "^16.9.13",
-    "react-dom": "^16.9.13",
-    "uuid": "^3.3.2"
+    "@jsonforms/core": "3.0.0-alpha.0",
+    "@jsonforms/react": "3.0.0-alpha.0",
+    "@jsonforms/vanilla-renderers": "3.0.0-alpha.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.16.0",
-    "@typescript-eslint/parser": "^2.16.0",
-    "eslint": "^6.8.0",
-    "eslint-plugin-header": "^3.0.0",
-    "eslint-plugin-import": "^2.20.0",
-    "eslint-plugin-no-null": "^1.0.2",
-    "eslint-plugin-react": "^7.20.3",
-    "rimraf": "latest",
-    "semver": "^6.3.0",
-    "typescript": "latest"
+    "rimraf": "^2.6.1",
+    "typescript": "^3.9.2"
   },
   "scripts": {
     "prepare": "yarn run clean && yarn run build",

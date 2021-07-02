@@ -3,26 +3,31 @@
   "name": "browser-app",
   "version": "0.0.0",
   "dependencies": {
-    "@theia/core": "latest",
-    "@theia/editor": "latest",
-    "@theia/filesystem": "latest",
-    "@theia/markers": "latest",
-    "@theia/messages": "latest",
-    "@theia/monaco": "latest",
-    "@theia/navigator": "latest",
-    "@theia/preferences": "latest",
-    "@theia/process": "latest",
-    "@theia/terminal": "latest",
-    "@theia/workspace": "latest",
+    "@theia/core": "^1.0.0",
+    "@theia/editor": "^1.0.0",
+    "@theia/filesystem": "^1.0.0",
+    "@theia/markers": "^1.0.0",
+    "@theia/messages": "^1.0.0",
+    "@theia/monaco": "^1.0.0",
+    "@theia/navigator": "^1.0.0",
+    "@theia/plugin-ext": "^1.0.0",
+    "@theia/plugin-ext-vscode": "^1.0.0",
+    "@theia/preferences": "^1.0.0",
+    "@theia/process": "^1.0.0",
+    "@theia/terminal": "^1.0.0",
+    "@theia/workspace": "^1.0.0",
     "tree-editor-example": "0.0.0"
   },
   "devDependencies": {
-    "@theia/cli": "latest"
+    "@theia/cli": "^1.0.0"
   },
   "scripts": {
-    "prepare": "theia build --mode development",
-    "start": "theia start --port=3000 --loglevel=debug --root-dir=../workspace",
-    "watch": "theia build --watch --mode development --port=3000 --loglevel=debug"
+    "prepare": "yarn run clean && yarn build",
+    "download:plugins": "theia download:plugins",
+    "clean": "theia clean",
+    "build": "theia build --mode development && yarn download:plugins",
+    "start": "theia start --loglevel=debug --root-dir=../workspace --plugins=local-dir:./plugins",
+    "watch": "theia build --watch --mode development"
   },
   "theia": {
     "frontend": {
@@ -32,5 +37,10 @@
       }
     },
     "target": "browser"
+  },
+  "theiaPluginsDir": "plugins",
+  "theiaPlugins": {
+    "vscode-builtin-json": "https://open-vsx.org/api/vscode/json/1.48.2/file/vscode.json-1.48.2.vsix",
+    "vscode-builtin-json-language": "https://open-vsx.org/api/vscode/json-language-features/1.48.2/file/vscode.json-language-features-1.48.2.vsix"
   }
 }
