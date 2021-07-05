@@ -1,10 +1,14 @@
 {
   "private": true,
+  "engines": {
+    "yarn": "1.0.x || >=1.2.1",
+    "node": ">=12.14.1 <13"
+  },
   "scripts": {
     "prepare": "lerna run prepare",
     "rebuild:browser": "theia rebuild:browser",
     "rebuild:electron": "theia rebuild:electron",
-    "example": "(cd example/browser-app && yarn start)",
+    "example": "yarn --cwd example/browser-app start",
     "watch": "lerna run --parallel watch",
     "test": "lerna run test",
     "publish": "yarn && yarn publish:latest",
@@ -20,7 +24,8 @@
     "eslint-plugin-no-null": "^1.0.2",
     "eslint-plugin-react": "^7.20.3",
     "lerna": "2.4.0",
-    "typescript": "latest"
+    "rimraf": "^2.6.1",
+    "typescript": "^3.9.2"
   },
   "@comment workspaces": [
     "We do not add 'example/electron-app' to the workspaces as it requires X11/Xvfb which is not available on our Eclipse Jenkins CI by default.",
@@ -30,35 +35,5 @@
     "theia-tree-editor",
     "example/browser-app",
     "example/tree-editor-example"
-  ],
-  "resolutions": {
-    "**/@theia/callhierarchy": "^1.6.0",
-    "**/@theia/console": "^1.6.0",
-    "**/@theia/core": "^1.6.0",
-    "**/@theia/debug": "^1.6.0",
-    "**/@theia/editor": "^1.6.0",
-    "**/@theia/file-search": "^1.6.0",
-    "**/@theia/filesystem": "^1.6.0",
-    "**/@theia/keymaps": "^1.6.0",
-    "**/@theia/markers": "^1.6.0",
-    "**/@theia/messages": "^1.6.0",
-    "**/@theia/mini-browser": "^1.6.0",
-    "**/@theia/monaco": "^1.6.0",
-    "**/@theia/navigator": "^1.6.0",
-    "**/@theia/outline-view": "^1.6.0",
-    "**/@theia/output": "^1.6.0",
-    "**/@theia/plugin-dev": "^1.6.0",
-    "**/@theia/plugin-ext": "^1.6.0",
-    "**/@theia/plugin-ext-vscode": "^1.6.0",
-    "**/@theia/plugin-metrics": "^1.6.0",
-    "**/@theia/preferences": "^1.6.0",
-    "**/@theia/process": "^1.6.0",
-    "**/@theia/search-in-workspace": "^1.6.0",
-    "**/@theia/terminal": "^1.6.0",
-    "**/@theia/typehierarchy": "^1.6.0",
-    "**/@theia/userstorage": "^1.6.0",
-    "**/@theia/variable-resolver": "^1.6.0",
-    "**/@theia/workspace": "^1.6.0",
-    "**/typescript": "^3.9.3"
-  }
+  ]
 }

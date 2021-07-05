@@ -122,11 +122,6 @@ export const jsonFormsConfig: JsonFormsDetailConfig = {
         trim: false,
         showUnfocusedDescription: true,
         hideRequiredAsterisk: false
-    },
-    refParserOptions: {
-        dereference: {
-            circular: 'ignore'
-        }
     }
 };
 
