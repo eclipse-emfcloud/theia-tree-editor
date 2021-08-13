@@ -18,7 +18,7 @@ can be found in the [documentation](./theia-tree-editor/DOCUMENTATION.MD).
 [example](./example) contains a simple development example using the tree editor framework in a minimal Theia.
 
 For more information, please visit the [EMF.cloud Website](https://www.eclipse.org/emfcloud/).
-If you have questions, contact us on our [spectrum chat](https://spectrum.chat/emfcloud/)
+If you have questions, contact us on our [discussions page](https://github.com/eclipse-emfcloud/emfcloud/discussions)
 and have a look at our [communication and support options](https://www.eclipse.org/emfcloud/contact/).
 
 ## Quick Start via Yeoman Generator
