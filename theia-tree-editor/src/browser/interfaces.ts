@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import { JsonSchema, UISchemaElement } from '@jsonforms/core';
-import { MaybePromise } from '@theia/core';
+import { Command, MaybePromise } from '@theia/core';
 import {
     CompositeTreeNode,
     DecoratedTreeNode,
@@ -143,6 +143,13 @@ export namespace TreeEditor {
          * @returns true if child nodes can be created
          */
         hasCreatableChildren(node: Node): boolean;
+    }
+
+    export interface AddCommandDescription {
+        parentType: string;
+        property: string;
+        type: string;
+        command: Command;
     }
 
     /**

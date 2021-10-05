@@ -8,7 +8,6 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { Command } from '@theia/core';
 import {
     createTreeContainer,
     defaultTreeProps,
@@ -70,38 +69,34 @@ export function createBasicTreeContainer(
 
 /**
  * Creates a new map based on the model service's children mapping.
- * The created map maps from property name to a new Map.
- * The inner map maps from type identifier to the command used to create a new instance of the type.
+ * The created map maps from command ID to command descriptor.
+ * The command descriptor contains information about the parent type, the type of the new node and the container property.
  *
- * Basically, this creates add commands for all types that can be created in properties, grouped by property name.
- *
- * Important: Just because an object has a property of a name in the returned mapping,
- * this does not mean the type can be created. To see if a command can be used to create an object's child,
- * the returned mapping needs to be cross-referenced with the model service's children mapping again.
+ * Basically, this creates add commands for all types that can be created in properties, grouped by command id.
  *
  * @param modelService The tree editor's model service
  */
-export function generateAddCommands(modelService: TreeEditor.ModelService): Map<string, Map<string, Command>> {
-    const creatableTypes: Set<TreeEditor.ChildrenDescriptor> = Array.from(modelService.getChildrenMapping(), ([_key, value]) => value)
-        // get flat array of child descriptors
-        .reduce((acc, val) => acc.concat(val), [])
-        // unify by adding to set
-        .reduce((acc, val) => acc.add(val), new Set<TreeEditor.ChildrenDescriptor>());
-
-    // Create a command for every type which can be added to at least one model object
-    const commandMap: Map<string, Map<string, Command>> = new Map();
-    Array.from(creatableTypes).forEach(desc => {
-        const classCommandMap: Map<string, Command> = new Map();
-        desc.children.forEach(type => {
-            const name = modelService.getNameForType(type);
-            const command = {
-                id: 'json-forms-tree.add.' + name,
-                label: name
-            };
-            classCommandMap.set(type, command);
+export function generateAddCommandDescriptions(modelService: TreeEditor.ModelService): Map<string, TreeEditor.AddCommandDescription> {
+    // Create a command for every type that can be added to a node
+    const commandMap: Map<string, TreeEditor.AddCommandDescription> = new Map();
+    Array.from(modelService.getChildrenMapping()).forEach(([parentType, value]) => {
+        // get all creatable types for the parent node
+        const creatableTypes: Set<TreeEditor.ChildrenDescriptor> = value
+            // get flat array of child descriptors
+            .reduce((acc, val) => acc.concat(val), [])
+            // unify by adding to set
+            .reduce((acc, val) => acc.add(val), new Set<TreeEditor.ChildrenDescriptor>());
+        Array.from(creatableTypes).forEach(desc => {
+            desc.children.forEach(type => {
+                const name = modelService.getNameForType(type);
+                const commandId = `json-forms-tree.add.${parentType}.${desc.property}.${name}`;
+                const command = {
+                    id: commandId,
+                    label: name
+                };
+                commandMap.set(commandId, { parentType, property: desc.property, type, command });
+            });
         });
-        commandMap.set(desc.property, classCommandMap);
     });
-
     return commandMap;
 }

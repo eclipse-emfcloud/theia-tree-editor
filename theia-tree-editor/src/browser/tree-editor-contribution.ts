@@ -8,20 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import {
-    Command,
-    CommandContribution,
-    CommandHandler,
-    CommandRegistry,
-    MenuContribution,
-    MenuModelRegistry
-} from '@theia/core';
+import { CommandContribution, CommandHandler, CommandRegistry, MenuContribution, MenuModelRegistry } from '@theia/core';
 import { LabelProviderContribution, WidgetOpenHandler } from '@theia/core/lib/browser';
 
 import { TreeEditor } from './interfaces';
 import { TreeAnchor, TreeContextMenu } from './master-tree-widget';
 import { BaseTreeEditorWidget } from './tree-editor-widget';
-import { generateAddCommands } from './util';
+import { generateAddCommandDescriptions } from './util';
 
 /**
  * Abstract base class for defining custom tree editor contributions.
@@ -30,7 +23,7 @@ import { generateAddCommands } from './util';
  * the widget with additional options (see WidgetOpenHandler).
  */
 export abstract class BaseTreeEditorContribution extends WidgetOpenHandler<BaseTreeEditorWidget> implements CommandContribution, MenuContribution {
-    private commandMap: Map<string, Map<string, Command>>;
+    private commandMap: Map<string, TreeEditor.AddCommandDescription>;
 
     constructor(
         private editorId: string,
@@ -42,30 +35,28 @@ export abstract class BaseTreeEditorContribution extends WidgetOpenHandler<BaseT
     /**
      * @returns maps property names to type identifiers to their corresponding add command
      */
-    private getCommandMap(): Map<string, Map<string, Command>> {
+    private getCommandMap(): Map<string, TreeEditor.AddCommandDescription> {
         if (!this.commandMap) {
-            this.commandMap = generateAddCommands(this.modelService);
+            this.commandMap = generateAddCommandDescriptions(this.modelService);
         }
         return this.commandMap;
     }
     registerCommands(commands: CommandRegistry): void {
-        this.getCommandMap().forEach((value, property, _map) => {
-            value.forEach((command, type) => commands.registerCommand(command, new AddCommandHandler(property, type, this.modelService)));
+        this.getCommandMap().forEach((description, _commandId, _map) => {
+            commands.registerCommand(description.command, new AddCommandHandler(description.parentType, description.property, description.type, this.modelService));
         });
     }
     registerMenus(menus: MenuModelRegistry): void {
-        this.getCommandMap().forEach((value, _property, _map) => {
-            value.forEach((command, type) => {
-                const iconInfo: TreeEditor.CommandIconInfo = {
-                    _id: 'theia-tree-editor-command-icon-info',
-                    editorId: this.editorId,
-                    type
-                };
-                menus.registerMenuAction(TreeContextMenu.ADD_MENU, {
-                    commandId: command.id,
-                    label: command.label,
-                    icon: this.labelProvider.getIcon(iconInfo)
-                });
+        this.getCommandMap().forEach((description, _property, _map) => {
+            const iconInfo: TreeEditor.CommandIconInfo = {
+                _id: 'theia-tree-editor-command-icon-info',
+                editorId: this.editorId,
+                type: description.type
+            };
+            menus.registerMenuAction(TreeContextMenu.ADD_MENU, {
+                commandId: description.command.id,
+                label: description.command.label,
+                icon: this.labelProvider.getIcon(iconInfo)
             });
         });
     }
@@ -74,8 +65,10 @@ export abstract class BaseTreeEditorContribution extends WidgetOpenHandler<BaseT
 class AddCommandHandler implements CommandHandler {
 
     constructor(
+        private readonly parent: string,
         private readonly property: string,
         private readonly type: string,
+
         private modelService: TreeEditor.ModelService) {
     }
 
@@ -87,9 +80,13 @@ class AddCommandHandler implements CommandHandler {
         if (!treeAnchor) {
             return false;
         }
+        const nodeType = treeAnchor.node.jsonforms.type;
+        if (nodeType !== this.parent) {
+            return false;
+        }
 
         // Check whether the node object's type can contain children of this command's type.
-        return this.modelService.getChildrenMapping().get(treeAnchor.node.jsonforms.type)
+        return this.modelService.getChildrenMapping().get(nodeType)
             .map(desc => desc.children)
             .reduce((acc, val) => acc.concat(val), [])
             .reduce((acc, val) => acc.add(val), new Set<string>())
