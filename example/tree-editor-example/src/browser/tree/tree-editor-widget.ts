@@ -15,7 +15,7 @@ import {
     ResourceTreeEditorWidget,
     TreeEditor
 } from '@eclipse-emfcloud/theia-tree-editor';
-import { Title, Widget } from '@theia/core/lib/browser';
+import { codicon, Title, Widget } from '@theia/core/lib/browser';
 import { DefaultResourceProvider, ILogger } from '@theia/core/lib/common';
 import { EditorPreferences } from '@theia/editor/lib/browser';
 import { WorkspaceService } from '@theia/workspace/lib/browser/workspace-service';
@@ -59,7 +59,7 @@ export class TreeEditorWidget extends ResourceTreeEditorWidget {
 
     protected configureTitle(title: Title<Widget>): void {
         super.configureTitle(title);
-        title.iconClass = 'fa fa-tree light-green';
+        title.iconClass = codicon('list-tree');
     }
 }
 

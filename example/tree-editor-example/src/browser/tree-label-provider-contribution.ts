@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import { UriSelection } from '@theia/core';
-import { LabelProviderContribution } from '@theia/core/lib/browser';
+import { codicon, LabelProviderContribution } from '@theia/core/lib/browser';
 import URI from '@theia/core/lib/common/uri';
 import { FileStat } from '@theia/filesystem/lib/common';
 import { injectable } from 'inversify';
@@ -32,7 +32,7 @@ export class TreeLabelProviderContribution implements LabelProviderContribution 
     }
 
     getIcon(): string {
-        return 'fa fa-tree light-green';
+        return codicon('list-tree');
     }
 
     // We don't need to specify getName() nor getLongName() because the default uri label provider is responsible for them

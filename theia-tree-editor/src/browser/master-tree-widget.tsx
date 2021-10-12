@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import { Emitter, MenuPath } from '@theia/core';
-import { ConfirmDialog, ExpandableTreeNode, TreeModel } from '@theia/core/lib/browser';
+import { codicon, ConfirmDialog, ExpandableTreeNode, TreeModel } from '@theia/core/lib/browser';
 import { ContextMenuRenderer, RenderContextMenuOptions } from '@theia/core/lib/browser/context-menu-renderer';
 import { TreeNode } from '@theia/core/lib/browser/tree/tree';
 import { NodeProps, TreeProps, TreeWidget } from '@theia/core/lib/browser/tree/tree-widget';
@@ -122,7 +122,7 @@ export class MasterTreeWidget extends TreeWidget {
                     {addPlus
                         ? (
                             <div
-                                className='node-button fa fa-plus'
+                                className={`node-button ${codicon('plus')}`}
                                 onClick={this.createAddHandler(node)}
                             />
                         )
@@ -130,7 +130,7 @@ export class MasterTreeWidget extends TreeWidget {
                     {addRemoveButton
                         ? (
                             <div
-                                className='node-button fa fa-trash'
+                                className={`node-button ${codicon('trash')}`}
                                 onClickCapture={this.createRemoveHandler(node)}
                             />
                         )
