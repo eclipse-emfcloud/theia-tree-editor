@@ -1,4 +1,4 @@
-# Theia Tree Editor ![build-status](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/emfcloud/job/eclipse-emfcloud/job/theia-tree-editor/job/master/) ![build-status-server](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/emfcloud/job/deploy-theia-tree-editor-npm/&label=publish)
+# Theia Tree Editor ![build-status](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/emfcloud/job/eclipse-emfcloud/job/theia-tree-editor/job/master/)
 
 [![License: EPL v2.0](https://img.shields.io/badge/License-EPL%20v2.0-yellow.svg)](https://www.eclipse.org/legal/epl-2.0/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -21,11 +21,17 @@ For more information, please visit the [EMF.cloud Website](https://www.eclipse.o
 If you have questions, contact us on our [discussions page](https://github.com/eclipse-emfcloud/emfcloud/discussions)
 and have a look at our [communication and support options](https://www.eclipse.org/emfcloud/contact/).
 
+## Available via NPM ![build-status-server](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/emfcloud/job/deploy-theia-tree-editor-npm/&label=publish)
+
+- *Snapshots:* https://www.npmjs.com/package/@eclipse-emfcloud/theia-tree-editor
+
 ## Quick Start via Yeoman Generator
 
-Probably the simplest way to get started with building your own editor is to look at an example. You can actually adapt the existing data model and learn how to customize the framework based on your specific requirements.
+The simplest way to get started with building your own editor is to look at an example.
+You can adapt the existing data model and learn how to customize the framework based on your specific requirements.
 
-To get started, we provide a Yeoman generator that will create your own template project with a working example. The template is integrated into the Theia extension generator.
+To get started, we provide a Yeoman generator that creates your own template project with a working example.
+The template is integrated into the Theia extension generator.
 To create the editor template project, install the extension generator and launch it:
 
 ```
