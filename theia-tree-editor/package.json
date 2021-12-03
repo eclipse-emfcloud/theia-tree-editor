@@ -23,13 +23,13 @@
     "style"
   ],
   "dependencies": {
-    "@jsonforms/core": "3.0.0-alpha.0",
-    "@jsonforms/react": "3.0.0-alpha.0",
-    "@jsonforms/vanilla-renderers": "3.0.0-alpha.0"
+    "@jsonforms/core": "3.0.0-alpha.2",
+    "@jsonforms/react": "3.0.0-alpha.2",
+    "@jsonforms/vanilla-renderers": "3.0.0-alpha.2"
   },
   "devDependencies": {
     "rimraf": "^2.6.1",
-    "typescript": "^3.9.2"
+    "typescript": "^4.2.3"
   },
   "peerDependencies": {
     "@theia/core": "^1.18.0",
