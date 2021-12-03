@@ -5,7 +5,7 @@
 
 Dependencies:
 [<img src="https://img.shields.io/badge/dynamic/json?color=blue&url=https://raw.githubusercontent.com/eclipse-emfcloud/theia-tree-editor/master/theia-tree-editor/package.json&query=$.dependencies%5B%27%40jsonforms%2Fcore%27%5D&label=JSONForms&logo=JSONForms" alt="JSONForms"/>](https://github.com/eclipsesource/jsonforms)
-[<img src="https://img.shields.io/badge/dynamic/json?color=blue&url=https://raw.githubusercontent.com/eclipse-emfcloud/theia-tree-editor/master/theia-tree-editor/package.json&query=$.dependencies%5B%27%40theia%2Fcore%27%5D&label=Theia&logo=Theia" alt="Theia"/>](https://github.com/eclipse-theia/theia)
+[<img src="https://img.shields.io/badge/dynamic/json?color=blue&url=https://raw.githubusercontent.com/eclipse-emfcloud/theia-tree-editor/master/theia-tree-editor/package.json&query=$.peerDependencies%5B%27%40theia%2Fcore%27%5D&label=Theia&logo=Theia" alt="Theia"/>](https://github.com/eclipse-theia/theia)
 
 Theia tree editor provides a framework to build tree master detail editors
 for editing model based data in Eclipse Theia.
