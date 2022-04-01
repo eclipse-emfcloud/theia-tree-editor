@@ -8,6 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
+import { Saveable } from '@theia/core/lib/browser';
 import { DefaultResourceProvider, ILogger, Resource } from '@theia/core/lib/common';
 import { EditorPreferences } from '@theia/editor/lib/browser';
 import { WorkspaceService } from '@theia/workspace/lib/browser/workspace-service';
@@ -20,7 +21,6 @@ import { NavigatableTreeEditorOptions, NavigatableTreeEditorWidget } from '../na
 
 export abstract class ResourceTreeEditorWidget extends NavigatableTreeEditorWidget {
     protected resource: Resource;
-    protected data: any;
 
     constructor(
         protected readonly treeWidget: MasterTreeWidget,
@@ -55,17 +55,30 @@ export abstract class ResourceTreeEditorWidget extends NavigatableTreeEditorWidg
             _ => console.error(`Could not create ressource for uri ${uri}`)
         );
 
-        this.autoSave = this.editorPreferences['editor.autoSave'];
+        this.autoSave = this.editorPreferences['files.autoSave'];
+        this.autoSaveDelay = this.editorPreferences['files.autoSaveDelay'];
         this.editorPreferences.onPreferenceChanged(ev => {
-            if (ev.preferenceName === 'editor.autoSave') {
-                this.autoSave = ev.newValue === 'on' ? 'on' : 'off';
+            if (ev.preferenceName === 'files.autoSave') {
+                this.autoSave = ev.newValue;
+            }
+            if (ev.preferenceName === 'files.autoSaveDelay') {
+                this.autoSaveDelay = ev.newValue;
             }
         });
         this.onDirtyChanged(ev => {
-            if (this.autoSave === 'on' && this.dirty) {
-                this.save();
+            if (this.autoSave !== 'off' && this.dirty) {
+                this.saveDelayed();
             }
         });
+    }
+
+    async revert(options?: Saveable.RevertOptions): Promise<void> {
+        return this.load();
+    }
+
+    applySnapshot(snapshot: { value: string }): void {
+        super.applySnapshot(snapshot);
+        this.setTreeData(false);
     }
 
     /**
@@ -74,10 +87,10 @@ export abstract class ResourceTreeEditorWidget extends NavigatableTreeEditorWidg
     protected abstract getTypeProperty(): string;
 
     public save(): void {
-        const content = JSON.stringify(this.data);
+        const content = JSON.stringify(this.instanceData);
         this.resource.saveContents(content).then(
             _ => this.setDirty(false),
-            error => console.error(`Ressource ${this.uri} could not be saved.`, error)
+            error => console.error(`Resource ${this.uri} could not be saved.`, error)
         );
     }
 
@@ -92,12 +105,16 @@ export abstract class ResourceTreeEditorWidget extends NavigatableTreeEditorWidg
         }
 
         const json = JSON.parse(content);
-        this.data = json;
+        this.instanceData = json;
+        return this.setTreeData(error);
+    }
+
+    protected setTreeData(error: boolean): Promise<void> {
         const treeData: TreeEditor.TreeData = {
             error,
-            data: json
+            data: this.instanceData
         };
-        this.treeWidget.setData(treeData);
+        return this.treeWidget.setData(treeData);
     }
 
     protected async deleteNode(node: Readonly<TreeEditor.Node>): Promise<void> {
@@ -143,10 +160,20 @@ export abstract class ResourceTreeEditorWidget extends NavigatableTreeEditorWidg
      * Called when a change occurred. Handle based on the autoSave flag.
      */
     protected handleChanged(): void {
-        if (this.autoSave === 'on') {
-            this.save();
+        if (this.autoSave !== 'off') {
+            this.saveDelayed();
         } else {
             this.setDirty(true);
         }
+    }
+
+    /**
+     * Triggers a delayed save
+     */
+    protected saveDelayed(): void {
+        const handle = window.setTimeout(() => {
+            this.save();
+            window.clearTimeout(handle);
+        }, this.autoSaveDelay);
     }
 }

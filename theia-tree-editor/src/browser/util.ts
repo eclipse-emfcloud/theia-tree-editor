@@ -9,6 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import {
+    // eslint-disable-next-line import/no-deprecated
     createTreeContainer,
     defaultTreeProps,
     TreeProps,
@@ -31,6 +32,7 @@ export const TREE_PROPS = {
 function createTreeWidget(
     parent: interfaces.Container
 ): MasterTreeWidget {
+    // eslint-disable-next-line import/no-deprecated
     const treeContainer = createTreeContainer(parent);
 
     treeContainer.unbind(TheiaTreeWidget);

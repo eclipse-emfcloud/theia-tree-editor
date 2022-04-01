@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import { Title } from '@phosphor/widgets';
-import { BaseWidget, Message, Saveable, SplitPanel, Widget } from '@theia/core/lib/browser';
+import { BaseWidget, Message, Saveable, SaveableSource, SplitPanel, Widget } from '@theia/core/lib/browser';
 import { Emitter, Event, ILogger } from '@theia/core/lib/common';
 import { WorkspaceService } from '@theia/workspace/lib/browser/workspace-service';
 import { injectable, postConstruct } from 'inversify';
@@ -22,9 +22,10 @@ import { TreeEditor } from './interfaces';
 import { AddCommandProperty, MasterTreeWidget } from './master-tree-widget';
 
 @injectable()
-export abstract class BaseTreeEditorWidget extends BaseWidget implements Saveable {
+export abstract class BaseTreeEditorWidget extends BaseWidget implements Saveable, SaveableSource {
     public dirty = false;
-    public autoSave: 'on' | 'off' = 'off';
+    public autoSave: 'off' | 'afterDelay' | 'onFocusChange' | 'onWindowChange' = 'off';
+    protected autoSaveDelay: number;
     private splitPanel: SplitPanel;
 
     protected readonly onDirtyChangedEmitter = new Emitter<void>();
@@ -78,6 +79,22 @@ export abstract class BaseTreeEditorWidget extends BaseWidget implements Saveabl
     @postConstruct()
     protected init(): void {
         this.configureTitle(this.title);
+    }
+    get saveable(): Saveable {
+        return this;
+    }
+
+    createSnapshot(): object {
+        const state = JSON.stringify(this.instanceData);
+        return { value: state };
+    }
+
+    applySnapshot(snapshot: { value: string }): void {
+        this.instanceData = JSON.parse(snapshot.value);
+    }
+
+    async revert(options?: Saveable.RevertOptions): Promise<void> {
+        throw new Error('Method revert needs to be overriden by implementor of BaseTreeEditorWiget');
     }
 
     protected onResize(_msg: any): void {
