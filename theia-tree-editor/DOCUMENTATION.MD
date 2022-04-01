@@ -11,7 +11,7 @@ To use the tree editor for a custom model, the following classes and interfaces 
 
 ## BaseTreeEditorWidget
 
-The implementation of this abstract class is the the whole editor widget containing a tree and a detail
+The implementation of this abstract class is the whole editor widget containing a tree and a detail
 whose content depends on the node selected in the tree.
 
 The following methods need to be implemented:
@@ -61,7 +61,7 @@ the contribution also needs to provide their icons by handling `CommandIconInfo`
 This could also be done in a separate label provider contribution but for simplicity
 sake we handle both in the same contribution.
 
-A simple label provider contributions could look likes this.
+A simple label provider contributions could look like this.
 
 ```typescript
 import { injectable } from "inversify";
@@ -121,7 +121,7 @@ This includes providing the data, a schema for the data, and a UI schema specify
 
 To use the editor, you need to bind it in your frontend module (which exports a `ContainerModule`).
 However, you should not bind your implementations directly to the interfaces provided
-by the json forms tree package because this creates conflicts when when using multiple tree editor implementations in the same Theia instance.
+by the json forms tree package because this creates conflicts when using multiple tree editor implementations in the same Theia instance.
 
 Instead, we provided a utility method `createBasicTreeContainer` that creates a new child container of the current context
 and binds all needed services inside the container.
