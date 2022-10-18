@@ -84,7 +84,7 @@ export abstract class BaseTreeEditorWidget extends BaseWidget implements Saveabl
         return this;
     }
 
-    createSnapshot(): object {
+    createSnapshot(): Saveable.Snapshot {
         const state = JSON.stringify(this.instanceData);
         return { value: state };
     }

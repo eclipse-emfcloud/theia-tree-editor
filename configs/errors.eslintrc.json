@@ -88,12 +88,6 @@
     "@typescript-eslint/no-misused-new": "error",
     "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/no-use-before-define": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      {
-        "args": "none"
-      }
-    ],
     "@typescript-eslint/quotes": [
       "error",
       "single",
