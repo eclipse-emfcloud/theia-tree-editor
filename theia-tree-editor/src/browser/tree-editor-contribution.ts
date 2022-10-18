@@ -56,7 +56,7 @@ export abstract class BaseTreeEditorContribution extends WidgetOpenHandler<BaseT
             menus.registerMenuAction(TreeContextMenu.ADD_MENU, {
                 commandId: description.command.id,
                 label: description.command.label,
-                icon: this.labelProvider.getIcon(iconInfo)
+                icon: this.labelProvider.getIcon?.(iconInfo)
             });
         });
     }
