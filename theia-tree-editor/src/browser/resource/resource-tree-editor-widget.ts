@@ -87,7 +87,7 @@ export abstract class ResourceTreeEditorWidget extends NavigatableTreeEditorWidg
     protected abstract getTypeProperty(): string;
 
     public save(): void {
-        const content = JSON.stringify(this.instanceData);
+        const content = JSON.stringify(this.instanceData, undefined, 2);
         this.resource.saveContents(content).then(
             _ => this.setDirty(false),
             error => console.error(`Resource ${this.uri} could not be saved.`, error)
