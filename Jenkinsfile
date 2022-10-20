@@ -58,8 +58,10 @@ pipeline {
         stage('Build') {
             steps {
                 container('node') {
-                    dir('theia-tree-editor') {
-                        buildInstaller()
+                    withCredentials([string(credentialsId: "github-bot-token", variable: 'GITHUB_TOKEN')]) {
+                        dir('theia-tree-editor') {
+                              buildInstaller()
+                        }
                     }
                 }
             }
@@ -78,7 +80,7 @@ def buildInstaller() {
     int MAX_RETRY = 3
 
     checkout scm
-    sh "printenv && yarn cache dir"
+    sh "yarn cache dir"
     sh "yarn cache clean"
     try {
         sh(script: 'yarn --frozen-lockfile --force')
