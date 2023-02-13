@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Dependencies:
-[<img src="https://img.shields.io/badge/dynamic/json?color=blue&url=https://raw.githubusercontent.com/eclipse-emfcloud/theia-tree-editor/master/theia-tree-editor/package.json&query=$.dependencies%5B%27%40jsonforms%2Fcore%27%5D&label=JSONForms&logo=JSONForms" alt="JSONForms"/>](https://github.com/eclipsesource/jsonforms)
+[<img src="https://img.shields.io/badge/dynamic/json?color=blue&url=https://raw.githubusercontent.com/eclipse-emfcloud/theia-tree-editor/master/theia-tree-editor/package.json&query=$.peerDependencies%5B%27%40jsonforms%2Fcore%27%5D&label=JSONForms&logo=JSONForms" alt="JSONForms"/>](https://github.com/eclipsesource/jsonforms)
 [<img src="https://img.shields.io/badge/dynamic/json?color=blue&url=https://raw.githubusercontent.com/eclipse-emfcloud/theia-tree-editor/master/theia-tree-editor/package.json&query=$.peerDependencies%5B%27%40theia%2Fcore%27%5D&label=Theia&logo=Theia" alt="Theia"/>](https://github.com/eclipse-theia/theia)
 
 Theia tree editor provides a framework to build tree master detail editors
@@ -23,7 +23,7 @@ and have a look at our [communication and support options](https://www.eclipse.o
 
 ## Available via NPM ![build-status-server](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/emfcloud/job/deploy-theia-tree-editor-npm/&label=publish)
 
-- *Snapshots:* https://www.npmjs.com/package/@eclipse-emfcloud/theia-tree-editor
+- _Snapshots:_ https://www.npmjs.com/package/@eclipse-emfcloud/theia-tree-editor
 
 ## Quick Start via Yeoman Generator
 
