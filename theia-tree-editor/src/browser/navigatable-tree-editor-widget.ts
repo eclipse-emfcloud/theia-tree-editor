@@ -7,7 +7,7 @@
  * available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
- ********************************************************************************/
+ *******************************************************************************/
 import { ILogger } from '@theia/core';
 import { Navigatable, Title, Widget } from '@theia/core/lib/browser';
 import URI from '@theia/core/lib/common/uri';
@@ -17,15 +17,12 @@ import { DetailFormWidget } from './detail-form-widget';
 import { MasterTreeWidget } from './master-tree-widget';
 import { BaseTreeEditorWidget } from './tree-editor-widget';
 
-export const NavigatableTreeEditorOptions = Symbol(
-    'NavigatableTreeEditorOptions'
-);
+export const NavigatableTreeEditorOptions = Symbol('NavigatableTreeEditorOptions');
 export interface NavigatableTreeEditorOptions {
     uri: URI;
 }
 
 export abstract class NavigatableTreeEditorWidget extends BaseTreeEditorWidget implements Navigatable {
-
     constructor(
         protected readonly treeWidget: MasterTreeWidget,
         protected readonly formWidget: DetailFormWidget,
@@ -34,13 +31,7 @@ export abstract class NavigatableTreeEditorWidget extends BaseTreeEditorWidget i
         readonly widget_id: string,
         protected readonly options: NavigatableTreeEditorOptions
     ) {
-        super(
-            treeWidget,
-            formWidget,
-            workspaceService,
-            logger,
-            widget_id
-        );
+        super(treeWidget, formWidget, workspaceService, logger, widget_id);
     }
 
     /** The uri of the editor's resource. */

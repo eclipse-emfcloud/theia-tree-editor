@@ -7,7 +7,7 @@
  * available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
- ********************************************************************************/
+ *******************************************************************************/
 import { BaseTreeEditorContribution, MasterTreeWidget, TreeEditor } from '@eclipse-emfcloud/theia-tree-editor';
 import { ApplicationShell, NavigatableWidgetOptions, OpenerService, WidgetOpenerOptions } from '@theia/core/lib/browser';
 import URI from '@theia/core/lib/common/uri';
@@ -39,10 +39,7 @@ export class TreeContribution extends BaseTreeEditorContribution {
         return 0;
     }
 
-    protected createWidgetOptions(
-        uri: URI,
-        options?: WidgetOpenerOptions
-    ): NavigatableWidgetOptions {
+    protected createWidgetOptions(uri: URI, options?: WidgetOpenerOptions): NavigatableWidgetOptions {
         return {
             kind: 'navigatable',
             uri: this.serializeUri(uri)

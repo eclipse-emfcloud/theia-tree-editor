@@ -7,14 +7,8 @@
  * available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
- ********************************************************************************/
-import {
-    // eslint-disable-next-line import/no-deprecated
-    createTreeContainer,
-    defaultTreeProps,
-    TreeProps,
-    TreeWidget as TheiaTreeWidget
-} from '@theia/core/lib/browser/tree';
+ *******************************************************************************/
+import { createTreeContainer, defaultTreeProps, TreeProps, TreeWidget as TheiaTreeWidget } from '@theia/core/lib/browser/tree';
 import { interfaces } from 'inversify';
 
 import { DetailFormWidget } from './detail-form-widget';
@@ -29,9 +23,7 @@ export const TREE_PROPS = {
     search: false
 } as TreeProps;
 
-function createTreeWidget(
-    parent: interfaces.Container
-): MasterTreeWidget {
+function createTreeWidget(parent: interfaces.Container): MasterTreeWidget {
     // eslint-disable-next-line import/no-deprecated
     const treeContainer = createTreeContainer(parent);
 
@@ -57,8 +49,8 @@ export function createBasicTreeContainer(
     parent: interfaces.Container,
     treeEditorWidget: interfaces.Newable<BaseTreeEditorWidget>,
     modelService: interfaces.Newable<TreeEditor.ModelService>,
-    nodeFactory: interfaces.Newable<TreeEditor.NodeFactory>): interfaces.Container {
-
+    nodeFactory: interfaces.Newable<TreeEditor.NodeFactory>
+): interfaces.Container {
     const container = parent.createChild();
     container.bind(TreeEditor.ModelService).to(modelService);
     container.bind(TreeEditor.NodeFactory).to(nodeFactory);

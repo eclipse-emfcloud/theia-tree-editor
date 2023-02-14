@@ -1,10 +1,8 @@
 {
+  "$schema": "https://json.schemastore.org/eslintrc",
   "rules": {
     // https://eslint.org/docs/rules/
-    "brace-style": [
-      "warn",
-      "1tbs"
-    ],
+    "brace-style": ["warn", "1tbs"],
     "comma-dangle": "warn",
     "indent": [
       "warn",
@@ -36,13 +34,7 @@
       "warn",
       "always",
       {
-        "exceptions": [
-          "*",
-          "+",
-          "-",
-          "/",
-          "!"
-        ]
+        "exceptions": ["*", "+", "-", "/", "!"]
       }
     ],
     "use-isnan": "warn",
@@ -54,12 +46,6 @@
       }
     ],
     "@typescript-eslint/no-non-null-assertion": "off",
-    "@typescript-eslint/type-annotation-spacing": "warn",
-    "@typescript-eslint/no-unused-vars": [
-      "warn",
-      {
-        "args": "none"
-      }
-    ]
+    "@typescript-eslint/type-annotation-spacing": "warn"
   }
 }

@@ -7,21 +7,15 @@
  * available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
- ********************************************************************************/
+ *******************************************************************************/
 import { JsonFormsCore } from '@jsonforms/core';
 import { JsonForms, JsonFormsInitStateProps, JsonFormsReactProps } from '@jsonforms/react';
-import {
-    JsonFormsStyleContext,
-    StyleContext,
-    vanillaCells,
-    vanillaRenderers,
-    vanillaStyles
-} from '@jsonforms/vanilla-renderers';
+import { JsonFormsStyleContext, StyleContext, vanillaCells, vanillaRenderers, vanillaStyles } from '@jsonforms/vanilla-renderers';
 import { Emitter, Event } from '@theia/core';
 import { BaseWidget, Message } from '@theia/core/lib/browser';
 import { inject, injectable } from 'inversify';
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import { createRoot, Root } from 'react-dom/client';
 
 import { TreeEditor } from './interfaces';
 
@@ -34,15 +28,15 @@ const JSON_FORMS_CONTAINER_CSS_CLASS = 'jsonforms-container';
 export class DetailFormWidget extends BaseWidget {
     private selectedNode: TreeEditor.Node;
     private jsonformsOnChange: (state: Pick<JsonFormsCore, 'data' | 'errors'>) => void;
+    private root: Root;
 
     protected changeEmitter = new Emitter<Readonly<any>>();
 
     constructor(@inject(TreeEditor.ModelService) private readonly modelService: TreeEditor.ModelService) {
         super();
-
+        this.root = createRoot(this.node);
         this.toDispose.push(this.changeEmitter);
-        this.jsonformsOnChange = (state: Pick<JsonFormsCore, 'data' | 'errors'>) =>
-            this.changeEmitter.fire(state.data);
+        this.jsonformsOnChange = (state: Pick<JsonFormsCore, 'data' | 'errors'>) => this.changeEmitter.fire(state.data);
         this.renderEmptyForms();
     }
 
@@ -61,7 +55,7 @@ export class DetailFormWidget extends BaseWidget {
             const schema = await this.modelService.getSchemaForNode(this.selectedNode);
             const uiSchema = await this.modelService.getUiSchemaForNode(this.selectedNode);
 
-            ReactDOM.render(
+            this.root.render(
                 <div className={JSON_FORMS_CONTAINER_CSS_CLASS}>
                     <JsonFormsStyleContext.Provider value={this.getStyles()}>
                         <JsonForms
@@ -72,8 +66,7 @@ export class DetailFormWidget extends BaseWidget {
                             {...this.getJsonFormsConfig()}
                         />
                     </JsonFormsStyleContext.Provider>
-                </div>,
-                this.node
+                </div>
             );
         } else {
             this.renderEmptyForms();
@@ -99,10 +92,7 @@ export class DetailFormWidget extends BaseWidget {
     }
 
     protected renderEmptyForms(): void {
-        ReactDOM.render(
-            <React.Fragment>Please select an element</React.Fragment>,
-            this.node
-        );
+        this.root.render(<React.Fragment>Please select an element</React.Fragment>);
     }
 
     protected onUpdateRequest(msg: Message): void {
@@ -151,4 +141,3 @@ export const styleContextValue: StyleContext = {
         }
     ]
 };
-

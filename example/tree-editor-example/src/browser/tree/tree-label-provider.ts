@@ -7,7 +7,7 @@
  * available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
- ********************************************************************************/
+ *******************************************************************************/
 import { TreeEditor } from '@eclipse-emfcloud/theia-tree-editor';
 import { codicon, LabelProviderContribution } from '@theia/core/lib/browser';
 import { injectable } from 'inversify';
@@ -27,11 +27,7 @@ const UNKNOWN_ICON = codicon('question');
 @injectable()
 export class TreeLabelProvider implements LabelProviderContribution {
     public canHandle(element: object): number {
-        if (
-            (TreeEditor.Node.is(element) ||
-                TreeEditor.CommandIconInfo.is(element)) &&
-            element.editorId === TreeEditorWidget.EDITOR_ID
-        ) {
+        if ((TreeEditor.Node.is(element) || TreeEditor.CommandIconInfo.is(element)) && element.editorId === TreeEditorWidget.EDITOR_ID) {
             return 1000;
         }
         return 0;
@@ -49,9 +45,7 @@ export class TreeLabelProvider implements LabelProviderContribution {
     }
 
     public getName(element: object): string | undefined {
-        const data = TreeEditor.Node.is(element)
-            ? element.jsonforms.data
-            : element;
+        const data = TreeEditor.Node.is(element) ? element.jsonforms.data : element;
         if (data.name) {
             return data.name;
         } else if (data.typeId) {

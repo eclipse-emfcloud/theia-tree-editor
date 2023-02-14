@@ -23,21 +23,21 @@
     "style"
   ],
   "devDependencies": {
-    "@jsonforms/core": "^3.0.0",
-    "@jsonforms/react": "^3.0.0",
-    "@jsonforms/vanilla-renderers": "^3.0.0",
+    "@jsonforms/core": "^3.1.0",
+    "@jsonforms/react": "^3.1.0",
+    "@jsonforms/vanilla-renderers": "^3.1.0",
     "rimraf": "^2.6.1",
     "typescript": "^4.2.3"
   },
   "peerDependencies": {
-    "@jsonforms/core": "^3.0.0",
-    "@jsonforms/react": "^3.0.0",
-    "@jsonforms/vanilla-renderers": "^3.0.0",
-    "@theia/core": "^1.30.0",
-    "@theia/editor": "^1.30.0",
-    "@theia/workspace": "^1.30.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "@jsonforms/core": "^3.1.0",
+    "@jsonforms/react": "^3.1.0",
+    "@jsonforms/vanilla-renderers": "^3.1.0",
+    "@theia/core": "^1.37.0",
+    "@theia/editor": "^1.37.0",
+    "@theia/workspace": "^1.37.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "scripts": {
     "prepare": "yarn run clean && yarn run build",

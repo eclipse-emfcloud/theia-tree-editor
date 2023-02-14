@@ -7,7 +7,7 @@
  * available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
- ********************************************************************************/
+ *******************************************************************************/
 import { TreeEditor } from '@eclipse-emfcloud/theia-tree-editor';
 
 export namespace ExampleModel {
@@ -21,16 +21,10 @@ export namespace ExampleModel {
         }
     }
 
-    const components = [
-        Type.Node,
-        Type.Leaf
-    ];
+    const components = [Type.Node, Type.Leaf];
 
     /** Maps types to their creatable children */
-    export const childrenMapping: Map<
-        string,
-        TreeEditor.ChildrenDescriptor[]
-    > = new Map([
+    export const childrenMapping: Map<string, TreeEditor.ChildrenDescriptor[]> = new Map([
         [
             Type.Tree,
             [

@@ -7,16 +7,10 @@
  * available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
- ********************************************************************************/
+ *******************************************************************************/
 import { JsonSchema, UISchemaElement } from '@jsonforms/core';
 import { Command, MaybePromise } from '@theia/core';
-import {
-    CompositeTreeNode,
-    DecoratedTreeNode,
-    ExpandableTreeNode,
-    SelectableTreeNode,
-    TreeNode
-} from '@theia/core/lib/browser/tree';
+import { CompositeTreeNode, DecoratedTreeNode, ExpandableTreeNode, SelectableTreeNode, TreeNode } from '@theia/core/lib/browser/tree';
 
 export namespace TreeEditor {
     export type RootNode = CompositeTreeNode;
@@ -27,11 +21,7 @@ export namespace TreeEditor {
         }
     }
 
-    export interface Node
-        extends CompositeTreeNode,
-        ExpandableTreeNode,
-        SelectableTreeNode,
-        DecoratedTreeNode {
+    export interface Node extends CompositeTreeNode, ExpandableTreeNode, SelectableTreeNode, DecoratedTreeNode {
         editorId: string;
         children: TreeNode[];
         name: string;
@@ -113,7 +103,6 @@ export namespace TreeEditor {
      */
     export const NodeFactory = Symbol('NodeFactory');
     export interface NodeFactory {
-
         /**
          * Recursively creates the tree's nodes from the given data.
          *
@@ -131,12 +120,7 @@ export namespace TreeEditor {
          * @param indexOrKey If the data is inserted in an array property, this is the index it is inserted at.
          *           If the data is inserted into an object, this is the key the data is associated with.
          */
-        mapData(
-            data: any,
-            parent?: Node,
-            property?: string,
-            indexOrKey?: number | string
-        ): MaybePromise<Node>;
+        mapData(data: any, parent?: Node, property?: string, indexOrKey?: number | string): MaybePromise<Node>;
 
         /**
          * @param node The node to create a child for

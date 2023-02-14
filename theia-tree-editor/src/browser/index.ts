@@ -7,13 +7,12 @@
  * available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
- ********************************************************************************/
-export * from './interfaces';
+ *******************************************************************************/
 export * from './detail-form-widget';
-export * from './tree-editor-contribution';
-export * from './tree-editor-widget';
+export * from './interfaces';
 export * from './master-tree-widget';
-export * from './util';
-
 export * from './navigatable-tree-editor-widget';
 export * from './resource/resource-tree-editor-widget';
+export * from './tree-editor-contribution';
+export * from './tree-editor-widget';
+export * from './util';

@@ -57,8 +57,8 @@ Install [nvm](https://github.com/creationix/nvm#install-script).
 
 Install npm and node.
 
-    nvm install 12.19.1
-    nvm use 12.19.1
+    nvm install 16
+    nvm use 16
 
 Install yarn.
 

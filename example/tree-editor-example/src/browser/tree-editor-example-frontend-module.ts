@@ -7,10 +7,10 @@
  * available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
- ********************************************************************************/
-import '../../src/browser/style/editor.css';
+ *******************************************************************************/
 import '@eclipse-emfcloud/theia-tree-editor/style/forms.css';
 import '@eclipse-emfcloud/theia-tree-editor/style/index.css';
+import '../../src/browser/style/editor.css';
 
 import { createBasicTreeContainer, NavigatableTreeEditorOptions } from '@eclipse-emfcloud/theia-tree-editor';
 import { CommandContribution, MenuContribution } from '@theia/core';
@@ -33,26 +33,15 @@ export default new ContainerModule(bind => {
     bind(CommandContribution).to(TreeContribution);
     bind(LabelProviderContribution).to(TreeLabelProvider);
     // bind services to themselves because we use them outside of the editor widget, too.
-    bind(TreeModelService)
-        .toSelf()
-        .inSingletonScope();
-    bind(TreeLabelProvider)
-        .toSelf()
-        .inSingletonScope();
+    bind(TreeModelService).toSelf().inSingletonScope();
+    bind(TreeLabelProvider).toSelf().inSingletonScope();
     bind<WidgetFactory>(WidgetFactory).toDynamicValue(context => ({
         id: TreeEditorWidget.WIDGET_ID,
         createWidget: (options: NavigatableWidgetOptions) => {
-            const treeContainer = createBasicTreeContainer(
-                context.container,
-                TreeEditorWidget,
-                TreeModelService,
-                TreeNodeFactory
-            );
+            const treeContainer = createBasicTreeContainer(context.container, TreeEditorWidget, TreeModelService, TreeNodeFactory);
             // Bind options
             const uri = new URI(options.uri);
-            treeContainer
-                .bind(NavigatableTreeEditorOptions)
-                .toConstantValue({ uri });
+            treeContainer.bind(NavigatableTreeEditorOptions).toConstantValue({ uri });
             return treeContainer.get(TreeEditorWidget);
         }
     }));

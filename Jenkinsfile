@@ -4,15 +4,15 @@ kind: Pod
 spec:
   containers:
   - name: node
-    image: eclipsetheia/theia-blueprint
+    image: eclipsetheia/theia-blueprint:builder
     tty: true
     resources:
       limits:
-        memory: "2Gi"
-        cpu: "1"
+        memory: "4Gi"
+        cpu: "2"
       requests:
-        memory: "2Gi"
-        cpu: "1"
+        memory: "4Gi"
+        cpu: "2"
     command:
     - cat
     volumeMounts:
@@ -22,18 +22,10 @@ spec:
     - mountPath: "/.yarn"
       name: "yarn-global"
       readOnly: false
-    - name: global-cache
-      mountPath: /.cache     
-    - name: global-npm
-      mountPath: /.npm      
   volumes:
   - name: "jenkins-home"
     emptyDir: {}
   - name: "yarn-global"
-    emptyDir: {}
-  - name: global-cache
-    emptyDir: {}
-  - name: global-npm
     emptyDir: {}
 """
 
@@ -53,6 +45,7 @@ pipeline {
         YARN_CACHE_FOLDER = "${env.WORKSPACE}/yarn-cache"
         SPAWN_WRAP_SHIM_ROOT = "${env.WORKSPACE}"
         EMAIL_TO = "ndoschek+eclipseci@eclipsesource.com, lkoehler+theia-tree-editor-ci@eclipsesource.com"
+        PUPPETEER_SKIP_DOWNLOAD="true"
     }
 
     stages {
@@ -60,9 +53,7 @@ pipeline {
             steps {
                 container('node') {
                     withCredentials([string(credentialsId: "github-bot-token", variable: 'GITHUB_TOKEN')]) {
-                        dir('theia-tree-editor') {
-                              buildInstaller()
-                        }
+                        sh "yarn --ignore-engines --unsafe-perm"
                     }
                 }
             }
@@ -106,22 +97,6 @@ pipeline {
                     mimeType: 'text/html', subject: 'Build ${JOB_NAME} back to normal (#${BUILD_NUMBER})', to: "${EMAIL_TO}"
                 }
             }
-        }
-    }
-}
-
-def buildInstaller() {
-    int MAX_RETRY = 3
-
-    checkout scm
-    sh "yarn cache dir"
-    sh "yarn cache clean"
-    try {
-        sh(script: 'yarn --frozen-lockfile --force')
-    } catch(error) {
-        retry(MAX_RETRY) {
-            echo "yarn failed - Retrying"
-            sh(script: 'yarn --frozen-lockfile --force')        
         }
     }
 }
