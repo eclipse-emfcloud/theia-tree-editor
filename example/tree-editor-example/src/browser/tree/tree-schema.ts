@@ -7,106 +7,101 @@
  * available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
- ********************************************************************************/
+ *******************************************************************************/
 /* eslint-disable header/header */
 export const leafView = {
-    'type': 'VerticalLayout',
-    'elements': [
+    type: 'VerticalLayout',
+    elements: [
         {
-            'type': 'Control',
-            'label': 'Name',
-            'scope': '#/properties/name'
+            type: 'Control',
+            label: 'Name',
+            scope: '#/properties/name'
         },
         {
-            'type': 'Control',
-            'label': 'Description',
-            'scope': '#/properties/description'
+            type: 'Control',
+            label: 'Description',
+            scope: '#/properties/description'
         }
     ]
 };
 
 export const treeView = {
-    'type': 'VerticalLayout',
-    'elements': [
+    type: 'VerticalLayout',
+    elements: [
         {
-            'type': 'Control',
-            'label': 'Name',
-            'scope': '#/properties/name'
+            type: 'Control',
+            label: 'Name',
+            scope: '#/properties/name'
         }
     ]
 };
 
 export const nodeView = {
-    'type': 'HorizontalLayout',
-    'elements': [
+    type: 'HorizontalLayout',
+    elements: [
         {
-            'type': 'Control',
-            'label': 'Name',
-            'scope': '#/properties/name'
+            type: 'Control',
+            label: 'Name',
+            scope: '#/properties/name'
         },
         {
-            'type': 'Control',
-            'label': 'Weight',
-            'scope': '#/properties/weight'
+            type: 'Control',
+            label: 'Weight',
+            scope: '#/properties/weight'
         }
     ]
 };
 
 export const exampleSchema = {
-    'definitions': {
-        'tree': {
-            'title': 'Tree',
-            'properties': {
-                'typeId': {
-                    'const': 'Tree'
+    definitions: {
+        tree: {
+            title: 'Tree',
+            properties: {
+                typeId: {
+                    const: 'Tree'
                 },
-                'name': {
-                    'type': 'string',
-                    'minLength': 3,
-                    'maxLength': 20
+                name: {
+                    type: 'string',
+                    minLength: 3,
+                    maxLength: 20
                 }
             },
-            'required': ['name'],
-            'additionalProperties': false
+            required: ['name'],
+            additionalProperties: false
         },
-        'node': {
-            'title': 'Node',
-            'properties': {
-                'typeId': {
-                    'const': 'Node'
+        node: {
+            title: 'Node',
+            properties: {
+                typeId: {
+                    const: 'Node'
                 },
-                'name': {
-                    'type': 'string'
+                name: {
+                    type: 'string'
                 },
-                'weight': {
-                    'type': 'number'
+                weight: {
+                    type: 'number'
                 }
             },
-            'required': [
-                'name',
-                'weight'
-            ],
-            'additionalProperties': false
+            required: ['name', 'weight'],
+            additionalProperties: false
         },
-        'leaf': {
-            'title': 'Leaf',
-            'type': 'object',
-            'properties': {
-                'typeId': {
-                    'const': 'Leaf'
+        leaf: {
+            title: 'Leaf',
+            type: 'object',
+            properties: {
+                typeId: {
+                    const: 'Leaf'
                 },
-                'name': {
-                    'type': 'string'
+                name: {
+                    type: 'string'
                 },
-                'description': {
-                    'type': 'string'
+                description: {
+                    type: 'string'
                 }
             },
-            'additionalProperties': false,
-            'required': [
-                'name'
-            ]
+            additionalProperties: false,
+            required: ['name']
         }
     },
-    '$ref': '#/definitions/tree'
+    $ref: '#/definitions/tree'
 };

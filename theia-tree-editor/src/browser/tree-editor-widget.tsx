@@ -7,15 +7,15 @@
  * available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
- ********************************************************************************/
+ *******************************************************************************/
 import { Title } from '@phosphor/widgets';
 import { BaseWidget, Message, Saveable, SaveableSource, SplitPanel, Widget } from '@theia/core/lib/browser';
 import { Emitter, Event, ILogger } from '@theia/core/lib/common';
 import { WorkspaceService } from '@theia/workspace/lib/browser/workspace-service';
 import { injectable, postConstruct } from 'inversify';
 import { debounce, isEqual } from 'lodash';
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 import { DetailFormWidget } from './detail-form-widget';
 import { TreeEditor } from './interfaces';
@@ -53,25 +53,15 @@ export abstract class BaseTreeEditorWidget extends BaseWidget implements Saveabl
         this.formWidget.addClass(BaseTreeEditorWidget.Styles.FORM);
         this.formWidget.onChange(
             debounce(data => {
-                if (
-                    !this.selectedNode ||
-                    !this.selectedNode.jsonforms ||
-                    isEqual(this.selectedNode.jsonforms.data, data)
-                ) {
+                if (!this.selectedNode || !this.selectedNode.jsonforms || isEqual(this.selectedNode.jsonforms.data, data)) {
                     return;
                 }
                 this.handleFormUpdate(data, this.selectedNode);
             }, 250)
         );
-        this.toDispose.push(
-            this.treeWidget.onSelectionChange(ev => this.treeSelectionChanged(ev))
-        );
-        this.toDispose.push(
-            this.treeWidget.onDelete(node => this.deleteNode(node))
-        );
-        this.toDispose.push(
-            this.treeWidget.onAdd(addProp => this.addNode(addProp))
-        );
+        this.toDispose.push(this.treeWidget.onSelectionChange(ev => this.treeSelectionChanged(ev)));
+        this.toDispose.push(this.treeWidget.onDelete(node => this.deleteNode(node)));
+        this.toDispose.push(this.treeWidget.onAdd(addProp => this.addNode(addProp)));
 
         this.toDispose.push(this.onDirtyChangedEmitter);
     }
@@ -104,10 +94,8 @@ export abstract class BaseTreeEditorWidget extends BaseWidget implements Saveabl
     }
 
     protected renderError(errorMessage: string): void {
-        ReactDOM.render(
-            <React.Fragment>{errorMessage}</React.Fragment>,
-            this.formWidget.node
-        );
+        const root = createRoot(this.formWidget.node);
+        root.render(<React.Fragment>{errorMessage}</React.Fragment>);
     }
 
     protected treeSelectionChanged(selectedNodes: readonly Readonly<TreeEditor.Node>[]): void {
@@ -145,11 +133,7 @@ export abstract class BaseTreeEditorWidget extends BaseWidget implements Saveabl
      * @param type The type of the node's data
      * @param property The property containing the node's data
      */
-    protected abstract addNode({
-        node,
-        type,
-        property
-    }: AddCommandProperty): Promise<void>;
+    protected abstract addNode({ node, type, property }: AddCommandProperty): Promise<void>;
 
     protected onAfterAttach(msg: Message): void {
         this.splitPanel.addWidget(this.treeWidget);
@@ -174,10 +158,7 @@ export abstract class BaseTreeEditorWidget extends BaseWidget implements Saveabl
      * @param data The new data for the node
      * @param node The tree node whose data will be updated
      */
-    protected abstract handleFormUpdate(
-        data: any,
-        node: TreeEditor.Node
-    ): Promise<void>;
+    protected abstract handleFormUpdate(data: any, node: TreeEditor.Node): Promise<void>;
 
     public save(): void {
         // do nothing by default

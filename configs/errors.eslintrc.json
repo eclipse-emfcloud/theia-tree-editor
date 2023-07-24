@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/eslintrc",
   "rules": {
     // https://eslint.org/docs/rules/
     // Possible Errors
@@ -6,26 +7,12 @@
     // Best Practices
     "curly": "error",
     "eol-last": "error",
-    "eqeqeq": [
-      "error",
-      "smart"
-    ],
+    "eqeqeq": ["error", "smart"],
     "guard-for-in": "error",
     "no-caller": "error",
     "no-eval": "error",
-    "no-redeclare": [
-      "error",
-      {
-        "builtinGlobals": false
-      }
-    ],
-    "no-restricted-imports": [
-      "error",
-      "..",
-      "../index",
-      "../..",
-      "../../index"
-    ],
+    "no-redeclare": "off", // allow same name for Symbol and TS types
+    "no-restricted-imports": ["error", "..", "../index", "../..", "../../index"],
     "no-sequences": "error",
     "no-throw-literal": "error",
     "no-unused-expressions": [
@@ -61,19 +48,10 @@
         "asyncArrow": "always"
       }
     ],
-    "one-var": [
-      "error",
-      "never"
-    ],
+    "one-var": ["error", "never"],
     // ECMAScript6
-    "arrow-body-style": [
-      "error",
-      "as-needed"
-    ],
-    "arrow-parens": [
-      "error",
-      "as-needed"
-    ],
+    "arrow-body-style": ["error", "as-needed"],
+    "arrow-parens": ["error", "as-needed"],
     "no-var": "error",
     "prefer-const": [
       "error",
@@ -82,12 +60,17 @@
       }
     ],
     // @typescript-eslint/eslint-plugin
-    "@typescript-eslint/class-name-casing": "error",
     "@typescript-eslint/consistent-type-definitions": "error",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-misused-new": "error",
     "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "args": "none"
+      }
+    ],
     "@typescript-eslint/quotes": [
       "error",
       "single",
@@ -95,20 +78,7 @@
         "avoidEscape": true
       }
     ],
-    "@typescript-eslint/semi": [
-      "error",
-      "always"
-    ],
-    // eslint-plugin-header
-    "header/header": [
-      2,
-      "block",
-      [
-        {
-          "pattern": "[\n\r]+ \\* Copyright \\([cC]\\) \\d{4}(-\\d{4})? .*[\n\r]+"
-        }
-      ]
-    ],
+    "@typescript-eslint/semi": ["error", "always"],
     // eslint-plugin-import
     "import/export": "off", // we have multiple exports due to namespaces, enums and classes that share the same name
     "import/no-deprecated": "error",

@@ -8,7 +8,7 @@ can be found in the [documentation](./theia-tree-editor/DOCUMENTATION.MD).
 For a small development example using this framework, checkout the [Github repository](https://github.com/eclipse-emfcloud/theia-tree-editor).
 
 For more information, please visit the [EMF.cloud Website](https://www.eclipse.org/emfcloud/).
-If you have questions, contact us on our [spectrum chat](https://spectrum.chat/emfcloud/)
+If you have questions, contact us on our [discussions page](https://github.com/eclipse-emfcloud/emfcloud/discussions)
 and have a look at our [communication and support options](https://www.eclipse.org/emfcloud/contact/).
 
 ## Setup
@@ -19,8 +19,8 @@ Install [nvm](https://github.com/creationix/nvm#install-script).
 
 Install npm and node.
 
-    nvm install 12.18.4
-    nvm use 12.18.4
+    nvm install 16
+    nvm use 16
 
 Install yarn.
 

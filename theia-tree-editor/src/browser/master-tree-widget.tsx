@@ -7,14 +7,14 @@
  * available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
- ********************************************************************************/
+ *******************************************************************************/
 import { Emitter, MenuPath } from '@theia/core';
 import { codicon, ConfirmDialog, ExpandableTreeNode, TreeModel } from '@theia/core/lib/browser';
 import { ContextMenuRenderer, RenderContextMenuOptions } from '@theia/core/lib/browser/context-menu-renderer';
 import { TreeNode } from '@theia/core/lib/browser/tree/tree';
 import { NodeProps, TreeProps, TreeWidget } from '@theia/core/lib/browser/tree/tree-widget';
 import { inject, injectable, postConstruct } from 'inversify';
-import * as React from 'react';
+import React from 'react';
 import { v4 } from 'uuid';
 
 import { TreeEditor } from './interfaces';
@@ -42,9 +42,7 @@ export namespace TreeContextMenu {
 
 @injectable()
 export class MasterTreeWidget extends TreeWidget {
-    protected onTreeWidgetSelectionEmitter = new Emitter<
-        readonly Readonly<TreeEditor.Node>[]
-    >();
+    protected onTreeWidgetSelectionEmitter = new Emitter<readonly Readonly<TreeEditor.Node>[]>();
     protected onDeleteEmitter = new Emitter<Readonly<TreeEditor.Node>>();
     protected onAddEmitter = new Emitter<Readonly<AddCommandProperty>>();
     protected data: TreeEditor.TreeData;
@@ -78,18 +76,13 @@ export class MasterTreeWidget extends TreeWidget {
         this.toDispose.push(this.onAddEmitter);
         this.toDispose.push(
             this.model.onSelectionChanged(e => {
-                this.onTreeWidgetSelectionEmitter.fire(e as readonly Readonly<
-                    TreeEditor.Node
-                >[]);
+                this.onTreeWidgetSelectionEmitter.fire(e as readonly Readonly<TreeEditor.Node>[]);
             })
         );
     }
 
     /** Overrides method in TreeWidget */
-    protected handleClickEvent(
-        node: TreeNode | undefined,
-        event: React.MouseEvent<HTMLElement>
-    ): void {
+    protected handleClickEvent(node: TreeNode | undefined, event: React.MouseEvent<HTMLElement>): void {
         const x = event.target as HTMLElement;
         if (x.classList.contains('node-button')) {
             // Don't do anything because the event is handled in the button's handler
@@ -102,10 +95,7 @@ export class MasterTreeWidget extends TreeWidget {
      * Overrides TreeWidget.renderTailDecorations
      * Add a add child and a remove button.
      */
-    protected renderTailDecorations(
-        node: TreeNode,
-        props: NodeProps
-    ): React.ReactNode {
+    protected renderTailDecorations(node: TreeNode, props: NodeProps): React.ReactNode {
         const deco = super.renderTailDecorations(node, props);
         if (!TreeEditor.Node.is(node)) {
             return deco;
@@ -118,23 +108,13 @@ export class MasterTreeWidget extends TreeWidget {
         return (
             <React.Fragment>
                 {deco}
-                <div className='node-buttons'>
-                    {addPlus
-                        ? (
-                            <div
-                                className={`node-button ${codicon('plus')}`}
-                                onClick={this.createAddHandler(node)}
-                            />
-                        )
-                        : ('')}
-                    {addRemoveButton
-                        ? (
-                            <div
-                                className={`node-button ${codicon('trash')}`}
-                                onClickCapture={this.createRemoveHandler(node)}
-                            />
-                        )
-                        : ('')}
+                <div className="node-buttons">
+                    {addPlus ? <div className={`node-button ${codicon('plus')}`} onClick={this.createAddHandler(node)} /> : ''}
+                    {addRemoveButton ? (
+                        <div className={`node-button ${codicon('trash')}`} onClickCapture={this.createRemoveHandler(node)} />
+                    ) : (
+                        ''
+                    )}
                 </div>
             </React.Fragment>
         );
@@ -196,7 +176,9 @@ export class MasterTreeWidget extends TreeWidget {
     public findNode(propIndexPaths: { property: string; index?: string }[]): TreeEditor.Node {
         const rootNode = this.model.root as TreeEditor.RootNode;
         return propIndexPaths.reduce((parent, segment) => {
-            const fitting = parent.children.filter(n => TreeEditor.Node.is(n) && n.jsonforms.property === segment.property && n.jsonforms.index === segment.index);
+            const fitting = parent.children.filter(
+                n => TreeEditor.Node.is(n) && n.jsonforms.property === segment.property && n.jsonforms.index === segment.index
+            );
             return fitting[0] as TreeEditor.Node;
         }, rootNode.children[0] as TreeEditor.Node);
     }
@@ -211,9 +193,7 @@ export class MasterTreeWidget extends TreeWidget {
         this.model.refresh();
     }
 
-    get onSelectionChange(): import('@theia/core').Event<
-        readonly Readonly<TreeEditor.Node>[]
-        > {
+    get onSelectionChange(): import('@theia/core').Event<readonly Readonly<TreeEditor.Node>[]> {
         return this.onTreeWidgetSelectionEmitter.event;
     }
     get onDelete(): import('@theia/core').Event<Readonly<TreeEditor.Node>> {
@@ -225,8 +205,7 @@ export class MasterTreeWidget extends TreeWidget {
 
     protected async refreshModelChildren(): Promise<void> {
         if (this.model.root && TreeEditor.RootNode.is(this.model.root)) {
-            const newTree =
-                !this.data || this.data.error ? [] : await this.nodeFactory.mapDataToNodes(this.data);
+            const newTree = !this.data || this.data.error ? [] : await this.nodeFactory.mapDataToNodes(this.data);
             this.model.root.children = newTree;
             this.model.refresh();
         }
@@ -249,7 +228,7 @@ export class MasterTreeWidget extends TreeWidget {
 
     protected renderIcon(node: TreeNode): React.ReactNode {
         return (
-            <div className='tree-icon-container'>
+            <div className="tree-icon-container">
                 <div className={this.labelProvider.getIcon(node)} />
             </div>
         );
@@ -323,11 +302,9 @@ export class MasterTreeWidget extends TreeWidget {
     }
 
     public removeChildren(node: TreeEditor.Node, indices: number[], property: string): void {
-        const toDelete = node.children.filter(n =>
-            TreeEditor.Node.is(n) &&
-            n.jsonforms.property === property &&
-            indices.includes(Number(n.jsonforms.index))
-        ).map(n => node.children.indexOf(n));
+        const toDelete = node.children
+            .filter(n => TreeEditor.Node.is(n) && n.jsonforms.property === property && indices.includes(Number(n.jsonforms.index)))
+            .map(n => node.children.indexOf(n));
         toDelete.forEach(i => node.children.splice(i, 1));
         this.updateIndex(node, property);
         this.model.refresh();

@@ -2,10 +2,16 @@
   "lerna": "2.4.0",
   "version": "0.0.0",
   "useWorkspaces": true,
+  "useNx": false,
   "npmClient": "yarn",
   "command": {
     "run": {
       "stream": true
+    },
+    "publish": {
+      "forcePublish": true,
+      "skipGit": true,
+      "registry": "https://registry.npmjs.org/"
     }
   }
 }

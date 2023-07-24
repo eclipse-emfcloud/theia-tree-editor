@@ -3,23 +3,23 @@
   "name": "browser-app",
   "version": "0.0.0",
   "dependencies": {
-    "@theia/core": "^1.30.0",
-    "@theia/editor": "^1.30.0",
-    "@theia/filesystem": "^1.30.0",
-    "@theia/markers": "^1.30.0",
-    "@theia/messages": "^1.30.0",
-    "@theia/monaco": "^1.30.0",
-    "@theia/navigator": "^1.30.0",
-    "@theia/plugin-ext": "^1.30.0",
-    "@theia/plugin-ext-vscode": "^1.30.0",
-    "@theia/preferences": "^1.30.0",
-    "@theia/process": "^1.30.0",
-    "@theia/terminal": "^1.30.0",
-    "@theia/workspace": "^1.30.0",
+    "@theia/core": "^1.37.0",
+    "@theia/editor": "^1.37.0",
+    "@theia/filesystem": "^1.37.0",
+    "@theia/markers": "^1.37.0",
+    "@theia/messages": "^1.37.0",
+    "@theia/monaco": "^1.37.0",
+    "@theia/navigator": "^1.37.0",
+    "@theia/plugin-ext": "^1.37.0",
+    "@theia/plugin-ext-vscode": "^1.37.0",
+    "@theia/preferences": "^1.37.0",
+    "@theia/process": "^1.37.0",
+    "@theia/terminal": "^1.37.0",
+    "@theia/workspace": "^1.37.0",
     "tree-editor-example": "0.0.0"
   },
   "devDependencies": {
-    "@theia/cli": "^1.30.0"
+    "@theia/cli": "^1.37.0"
   },
   "scripts": {
     "prepare": "yarn run clean && yarn build",

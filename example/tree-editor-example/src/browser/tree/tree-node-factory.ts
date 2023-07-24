@@ -7,7 +7,7 @@
  * available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
- ********************************************************************************/
+ *******************************************************************************/
 import { TreeEditor } from '@eclipse-emfcloud/theia-tree-editor';
 import { ILogger } from '@theia/core';
 import { inject, injectable } from 'inversify';
@@ -23,7 +23,7 @@ export class TreeNodeFactory implements TreeEditor.NodeFactory {
         @inject(TreeLabelProvider)
         private readonly labelProvider: TreeLabelProvider,
         @inject(ILogger) private readonly logger: ILogger
-    ) { }
+    ) {}
 
     mapDataToNodes(treeData: TreeEditor.TreeData): TreeEditor.Node[] {
         const node = this.mapData(treeData.data);
@@ -33,12 +33,7 @@ export class TreeNodeFactory implements TreeEditor.NodeFactory {
         return [];
     }
 
-    mapData(
-        data: any,
-        parent?: TreeEditor.Node,
-        property?: string,
-        indexOrKey?: number | string
-    ): TreeEditor.Node {
+    mapData(data: any, parent?: TreeEditor.Node, property?: string, indexOrKey?: number | string): TreeEditor.Node {
         if (!data) {
             this.logger.warn('mapData called without data');
         }
@@ -52,10 +47,7 @@ export class TreeNodeFactory implements TreeEditor.NodeFactory {
                 type: this.getTypeId(data),
                 data: data,
                 property: property!,
-                index:
-                    typeof indexOrKey === 'number'
-                        ? indexOrKey.toFixed(0)
-                        : indexOrKey
+                index: typeof indexOrKey === 'number' ? indexOrKey.toFixed(0) : indexOrKey
             }
         };
 
@@ -76,9 +68,7 @@ export class TreeNodeFactory implements TreeEditor.NodeFactory {
     }
 
     hasCreatableChildren(node: TreeEditor.Node): boolean {
-        return node
-            ? ExampleModel.childrenMapping.get(node.jsonforms.type) !== undefined
-            : false;
+        return node ? ExampleModel.childrenMapping.get(node.jsonforms.type) !== undefined : false;
     }
 
     protected defaultNode(): Omit<TreeEditor.Node, 'editorId'> {

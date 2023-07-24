@@ -4,37 +4,46 @@
 // - Linux: $HOME/.config/Code/User/settings.json
 // - Mac: $HOME/Library/Application Support/Code/User/settings.json
 {
-  "typescriptHero.imports.organizeOnSave": true,
-  "typescriptHero.imports.disableImportsSorting": false,
-  "typescriptHero.imports.stringQuoteStyle": "'",
-  "typescriptHero.imports.insertSemicolons": true,
-  "typescriptHero.imports.multiLineTrailingComma": false,
-  "typescriptHero.imports.ignoredFromRemoval": [
-    "react",
-    "snabbdom-jsx"
-  ],
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": true,
+    "source.organizeImports": true
   },
+  "eslint.validate": ["javascript", "typescript"],
+  "prettier.prettierPath": "node_modules/prettier",
   "search.exclude": {
     "**/node_modules": true,
     "**/lib": true
   },
-  "editor.insertSpaces": true,
-  "[typescript]": {
-    "editor.tabSize": 4
+  "task.autoDetect": "off",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
-    "editor.tabSize": 2
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "eslint.enable": true,
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "html",
-    "typescript",
-    "typescriptreact"
-  ]
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "markdownlint.config": {
+    "no-inline-html": {
+      "allowed_elements": ["br", "details", "kbd", "summary"]
+    }
+  }
 }
